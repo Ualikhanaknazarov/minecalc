@@ -2188,8 +2188,19 @@ function updateRegLang() {
 }
 
 // Check if user already registered
+let _regFormShown = false;
 if (!localStorage.getItem('minecalc_registered')) {
   showRegModal();
+  _regFormShown = true;
+  if (typeof gtag === 'function') gtag('event', 'registration_shown');
+
+  // Track abandonment: user closes tab or navigates away without registering
+  window.addEventListener('beforeunload', function _regAbandon() {
+    if (!localStorage.getItem('minecalc_registered') && _regFormShown) {
+      if (typeof gtag === 'function') gtag('event', 'registration_abandoned');
+    }
+    window.removeEventListener('beforeunload', _regAbandon);
+  });
 }
 
 document.getElementById('regForm').addEventListener('submit', async function(e) {
