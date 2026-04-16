@@ -11,7 +11,7 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MineCalc — Cutoff Grade Toolkit for Mining Engineers</title>
+<title>WTF is my Cutoff? — Three methods. Zero excuses.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -833,8 +833,8 @@
 <header class="site-head">
   <div class="head-wrap">
     <div class="brand">
-      <div class="brand-mark" data-i18n="brand">MineCalc</div>
-      <div class="brand-sub" data-i18n="brand_sub">Cutoff Grade Toolkit for Mining Engineers</div>
+      <div class="brand-mark" data-i18n="brand">WTF is my Cutoff?</div>
+      <div class="brand-sub" data-i18n="brand_sub">Three methods. Zero excuses.</div>
     </div>
     <div class="lang-toggle" role="tablist">
       <button class="active" data-lang="en">EN</button>
@@ -846,23 +846,23 @@
 <!-- ============ REGISTRATION MODAL ============ -->
 <div id="regOverlay" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(26,24,20,0.55); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center;">
   <div style="background:#fff; border-radius:16px; padding:40px 36px 32px; max-width:420px; width:90%; box-shadow:0 24px 80px rgba(0,0,0,0.18); font-family:var(--sans);">
-    <div style="font-family:var(--serif); font-size:22px; font-weight:600; margin-bottom:4px; font-variation-settings:'opsz' 40;">Welcome to MineCalc</div>
-    <p id="regSubtitle" style="color:var(--ink-muted); font-size:13px; margin-bottom:24px; line-height:1.5;">Register once to access all three cutoff grade calculators. Free forever.</p>
+    <div style="font-family:var(--serif); font-size:22px; font-weight:600; margin-bottom:4px; font-variation-settings:'opsz' 40;" id="regTitle">Your Excel won't save you here</div>
+    <p id="regSubtitle" style="color:var(--ink-muted); font-size:13px; margin-bottom:24px; line-height:1.5;">Three methods. Zero excuses. Drop your name and let's calculate.</p>
     <form id="regForm" autocomplete="on">
       <label style="display:block; margin-bottom:14px;">
-        <span style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); display:block; margin-bottom:5px;" id="regLabelName">Full Name</span>
-        <input id="regName" type="text" required placeholder="John Smith" style="width:100%; padding:10px 14px; border:1.5px solid var(--rule); border-radius:8px; font-size:15px; font-family:inherit; outline:none; transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rule)'">
+        <span style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); display:block; margin-bottom:5px;" id="regLabelName">Who's asking?</span>
+        <input id="regName" type="text" required placeholder="Not your driller's nickname" style="width:100%; padding:10px 14px; border:1.5px solid var(--rule); border-radius:8px; font-size:15px; font-family:inherit; outline:none; transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rule)'">
       </label>
       <label style="display:block; margin-bottom:14px;">
-        <span style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); display:block; margin-bottom:5px;" id="regLabelEmail">Work Email</span>
-        <input id="regEmail" type="email" required placeholder="john@mining.com" style="width:100%; padding:10px 14px; border:1.5px solid var(--rule); border-radius:8px; font-size:15px; font-family:inherit; outline:none; transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rule)'">
+        <span style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); display:block; margin-bottom:5px;" id="regLabelEmail">Where to send the bragging rights</span>
+        <input id="regEmail" type="email" required placeholder="you@notgmail.com" style="width:100%; padding:10px 14px; border:1.5px solid var(--rule); border-radius:8px; font-size:15px; font-family:inherit; outline:none; transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rule)'">
       </label>
       <label style="display:block; margin-bottom:24px;">
-        <span style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); display:block; margin-bottom:5px;" id="regLabelCompany">Company / University</span>
-        <input id="regCompany" type="text" required placeholder="Acme Mining Ltd." style="width:100%; padding:10px 14px; border:1.5px solid var(--rule); border-radius:8px; font-size:15px; font-family:inherit; outline:none; transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rule)'">
+        <span style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); display:block; margin-bottom:5px;" id="regLabelCompany">Who pays your salary?</span>
+        <input id="regCompany" type="text" required placeholder="The one on your hard hat" style="width:100%; padding:10px 14px; border:1.5px solid var(--rule); border-radius:8px; font-size:15px; font-family:inherit; outline:none; transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rule)'">
       </label>
-      <button id="regSubmitBtn" type="submit" style="width:100%; padding:12px; background:var(--accent); color:#fff; border:none; border-radius:8px; font-size:15px; font-weight:600; font-family:inherit; cursor:pointer; transition:background 0.2s;">Get Access</button>
-      <p style="text-align:center; font-size:11px; color:var(--ink-muted); margin-top:12px; line-height:1.4;" id="regDisclaimer">Your data is stored securely and never shared with third parties.</p>
+      <button id="regSubmitBtn" type="submit" style="width:100%; padding:12px; background:var(--accent); color:#fff; border:none; border-radius:8px; font-size:15px; font-weight:600; font-family:inherit; cursor:pointer; transition:background 0.2s;">Let me in</button>
+      <p style="text-align:center; font-size:11px; color:var(--ink-muted); margin-top:12px; line-height:1.4;" id="regDisclaimer">We won't spam you. We're engineers, not marketers.</p>
     </form>
   </div>
 </div>
@@ -1519,7 +1519,7 @@
     <div class="foot-note">
       <b data-i18n="foot_b">All figures are illustrative.</b> <span data-i18n="foot_body">Project names, operators and deposit identifiers have been removed. Parameters are ordered to typical industry ranges but do not represent any specific asset, contract, or concentrate marketing agreement. Use for education and methodology discussion only — not for commercial decisions.</span>
     </div>
-    <div class="foot-meta" data-i18n="foot_meta">MineCalc · v1.0 · Apr 2026</div>
+    <div class="foot-meta" data-i18n="foot_meta">WTF is my Cutoff? · v1.0 · Apr 2026</div>
   </div>
 </footer>
 
@@ -1527,8 +1527,8 @@
 // ============ TRANSLATIONS ============
 const I18N = {
   en: {
-    brand: "MineCalc",
-    brand_sub: "Cutoff Grade Toolkit for Mining Engineers",
+    brand: "WTF is my Cutoff?",
+    brand_sub: "Three methods. Zero excuses.",
     hero_eyebrow: "Mining Economics · Reference Tool",
     hero_title: "Three ways to calculate <em>cutoff grade</em> — built on the same numbers.",
     hero_lede: "An interactive reference that makes the difference between the GKZ grade-based method, the single-metal concentrate method, and the full NSR approach visible and testable. Every field has a tooltip. Every formula is shown in the open.",
@@ -1652,11 +1652,11 @@ const I18N = {
 
     foot_b: "All figures are illustrative.",
     foot_body: "Project names, operators and deposit identifiers have been removed. Parameters are ordered to typical industry ranges but do not represent any specific asset, contract, or concentrate marketing agreement. Use for education and methodology discussion only — not for commercial decisions.",
-    foot_meta: "MineCalc · v1.0 · Apr 2026"
+    foot_meta: "WTF is my Cutoff? · v1.0 · Apr 2026"
   },
   ru: {
-    brand: "MineCalc",
-    brand_sub: "Инструменты бортового содержания для горных инженеров",
+    brand: "WTF is my Cutoff?",
+    brand_sub: "Три метода. Ноль отмазок.",
     hero_eyebrow: "Горная экономика · Справочный инструмент",
     hero_title: "Три способа рассчитать <em>бортовое содержание</em> — на одних и тех же данных.",
     hero_lede: "Интерактивный справочник, который показывает разницу между методом ГКЗ «по содержанию», монометальным методом «через концентрат» и полным NSR-подходом. У каждого поля есть подсказка. Каждая формула раскрыта.",
@@ -1779,7 +1779,7 @@ const I18N = {
 
     foot_b: "Все цифры иллюстративны.",
     foot_body: "Названия проектов, операторов и идентификаторы месторождений удалены. Параметры приведены к типовым отраслевым диапазонам и не представляют конкретный актив, контракт или соглашение о реализации концентрата. Использовать только для образования и обсуждения методологии — не для коммерческих решений.",
-    foot_meta: "MineCalc · v1.0 · Apr 2026"
+    foot_meta: "WTF is my Cutoff? · v1.0 · Apr 2026"
   }
 };
 
@@ -2174,17 +2174,20 @@ function hideRegModal() {
 
 function updateRegLang() {
   const isRu = currentLang === 'ru';
-  document.querySelector('#regOverlay div > div:first-child').textContent = isRu ? '\u0414\u043e\u0431\u0440\u043e \u043f\u043e\u0436\u0430\u043b\u043e\u0432\u0430\u0442\u044c \u0432 MineCalc' : 'Welcome to MineCalc';
+  document.getElementById('regTitle').textContent = isRu ? '\u0422\u0432\u043e\u0439 Excel \u0442\u0435\u0431\u044f \u0442\u0443\u0442 \u043d\u0435 \u0441\u043f\u0430\u0441\u0451\u0442' : "Your Excel won't save you here";
   document.getElementById('regSubtitle').textContent = isRu
-    ? '\u0417\u0430\u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0438\u0440\u0443\u0439\u0442\u0435\u0441\u044c \u043e\u0434\u0438\u043d \u0440\u0430\u0437 \u0434\u043b\u044f \u0434\u043e\u0441\u0442\u0443\u043f\u0430 \u043a\u043e \u0432\u0441\u0435\u043c \u0442\u0440\u0451\u043c \u043a\u0430\u043b\u044c\u043a\u0443\u043b\u044f\u0442\u043e\u0440\u0430\u043c. \u0411\u0435\u0441\u043f\u043b\u0430\u0442\u043d\u043e \u043d\u0430\u0432\u0441\u0435\u0433\u0434\u0430.'
-    : 'Register once to access all three cutoff grade calculators. Free forever.';
-  document.getElementById('regLabelName').textContent = isRu ? '\u0418\u043c\u044f \u0438 \u0444\u0430\u043c\u0438\u043b\u0438\u044f' : 'Full Name';
-  document.getElementById('regLabelEmail').textContent = isRu ? '\u0420\u0430\u0431\u043e\u0447\u0438\u0439 email' : 'Work Email';
-  document.getElementById('regLabelCompany').textContent = isRu ? '\u041a\u043e\u043c\u043f\u0430\u043d\u0438\u044f / \u0423\u043d\u0438\u0432\u0435\u0440\u0441\u0438\u0442\u0435\u0442' : 'Company / University';
-  document.getElementById('regSubmitBtn').textContent = isRu ? '\u041f\u043e\u043b\u0443\u0447\u0438\u0442\u044c \u0434\u043e\u0441\u0442\u0443\u043f' : 'Get Access';
+    ? '\u0422\u0440\u0438 \u043c\u0435\u0442\u043e\u0434\u0430. \u041d\u043e\u043b\u044c \u043e\u0442\u043c\u0430\u0437\u043e\u043a. \u041e\u0441\u0442\u0430\u0432\u044c \u0438\u043c\u044f \u0438 \u0441\u0447\u0438\u0442\u0430\u0435\u043c.'
+    : "Three methods. Zero excuses. Drop your name and let's calculate.";
+  document.getElementById('regLabelName').textContent = isRu ? '\u041a\u0430\u043a \u0442\u0435\u0431\u044f \u0437\u043e\u0432\u0443\u0442?' : "Who's asking?";
+  document.getElementById('regName').placeholder = isRu ? '\u0422\u043e\u043b\u044c\u043a\u043e \u043d\u0435 \u043a\u043b\u0438\u0447\u043a\u0430' : "Not your driller's nickname";
+  document.getElementById('regLabelEmail').textContent = isRu ? '\u041a\u0443\u0434\u0430 \u0441\u043b\u0430\u0442\u044c \u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442\u044b' : 'Where to send the bragging rights';
+  document.getElementById('regEmail').placeholder = isRu ? '\u0442\u044b@\u043d\u0435gmail.com' : 'you@notgmail.com';
+  document.getElementById('regLabelCompany').textContent = isRu ? '\u041a\u0442\u043e \u043f\u043b\u0430\u0442\u0438\u0442 \u0437\u0430\u0440\u043f\u043b\u0430\u0442\u0443?' : 'Who pays your salary?';
+  document.getElementById('regCompany').placeholder = isRu ? '\u0422\u0430, \u0447\u0442\u043e \u043d\u0430 \u043a\u0430\u0441\u043a\u0435' : 'The one on your hard hat';
+  document.getElementById('regSubmitBtn').textContent = isRu ? '\u041f\u0443\u0441\u0442\u0438\u0442\u0435 \u0443\u0436\u0435' : 'Let me in';
   document.getElementById('regDisclaimer').textContent = isRu
-    ? '\u0412\u0430\u0448\u0438 \u0434\u0430\u043d\u043d\u044b\u0435 \u0445\u0440\u0430\u043d\u044f\u0442\u0441\u044f \u0431\u0435\u0437\u043e\u043f\u0430\u0441\u043d\u043e \u0438 \u043d\u0438\u043a\u043e\u0433\u0434\u0430 \u043d\u0435 \u043f\u0435\u0440\u0435\u0434\u0430\u044e\u0442\u0441\u044f \u0442\u0440\u0435\u0442\u044c\u0438\u043c \u043b\u0438\u0446\u0430\u043c.'
-    : 'Your data is stored securely and never shared with third parties.';
+    ? '\u0421\u043f\u0430\u043c\u0438\u0442\u044c \u043d\u0435 \u0431\u0443\u0434\u0435\u043c. \u041c\u044b \u0438\u043d\u0436\u0435\u043d\u0435\u0440\u044b, \u0430 \u043d\u0435 \u043c\u0430\u0440\u043a\u0435\u0442\u043e\u043b\u043e\u0433\u0438.'
+    : "We won't spam you. We're engineers, not marketers.";
 }
 
 // Check if user already registered
