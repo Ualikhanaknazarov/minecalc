@@ -1,0 +1,2260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) — replace GA_MEASUREMENT_ID with your actual ID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'GA_MEASUREMENT_ID');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MineCalc — Cutoff Grade Toolkit for Mining Engineers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf7f2;
+    --bg-card: #ffffff;
+    --bg-subtle: #f1ede6;
+    --bg-inset: #ece7de;
+    --ink: #1a1814;
+    --ink-soft: #4a4640;
+    --ink-muted: #8a857c;
+    --rule: #d9d3c6;
+    --rule-soft: #e8e3d8;
+    --accent: #b8612e;
+    --accent-dark: #8a4620;
+    --accent-soft: #f2e4d6;
+    --good: #4a6b3e;
+    --warn: #a86a1f;
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'IBM Plex Sans', -apple-system, sans-serif;
+    --mono: 'IBM Plex Mono', 'SF Mono', monospace;
+    --shadow-sm: 0 1px 2px rgba(26, 24, 20, 0.04);
+    --shadow: 0 2px 8px rgba(26, 24, 20, 0.06), 0 1px 2px rgba(26, 24, 20, 0.04);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.55;
+    font-weight: 400;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(circle at 15% 8%, rgba(184, 97, 46, 0.035) 0%, transparent 35%),
+      radial-gradient(circle at 85% 92%, rgba(74, 107, 62, 0.025) 0%, transparent 40%);
+  }
+
+  /* ============ HEADER ============ */
+  header.site-head {
+    border-bottom: 1px solid var(--rule);
+    background: var(--bg);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(8px);
+    background-color: rgba(250, 247, 242, 0.92);
+  }
+  .head-wrap {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+  }
+  .brand-mark {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    font-variation-settings: "opsz" 40;
+  }
+  .brand-mark::before {
+    content: "";
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    background: var(--accent);
+    border-radius: 50%;
+    margin-right: 10px;
+    vertical-align: 4px;
+  }
+  .brand-sub {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .lang-toggle {
+    display: flex;
+    background: var(--bg-inset);
+    border-radius: 999px;
+    padding: 3px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+  }
+  .lang-toggle button {
+    border: 0;
+    background: transparent;
+    padding: 7px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 500;
+    color: var(--ink-muted);
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+  }
+  .lang-toggle button.active {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 56px 32px 36px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--accent);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .eyebrow::after {
+    content: "";
+    flex: 0 0 60px;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.4;
+  }
+  h1.hero-title {
+    font-family: var(--serif);
+    font-weight: 350;
+    font-size: clamp(34px, 5vw, 58px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    max-width: 20ch;
+    margin-bottom: 20px;
+    font-variation-settings: "opsz" 144;
+  }
+  h1.hero-title em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 350;
+  }
+  .hero-lede {
+    max-width: 58ch;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    font-weight: 300;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 36px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px dotted var(--rule);
+    flex-wrap: wrap;
+  }
+  .hero-meta > div {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-muted);
+  }
+  .hero-meta strong {
+    display: block;
+    font-family: var(--serif);
+    font-size: 16px;
+    color: var(--ink);
+    text-transform: none;
+    letter-spacing: 0;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  /* ============ TABS ============ */
+  .tab-bar {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 32px;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    background: var(--bg);
+  }
+  .tab-btn {
+    border: 0;
+    background: transparent;
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--ink-muted);
+    padding: 22px 28px 20px;
+    cursor: pointer;
+    position: relative;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s ease, border-color 0.2s ease;
+    white-space: nowrap;
+    letter-spacing: -0.01em;
+    font-variation-settings: "opsz" 36;
+  }
+  .tab-btn .tab-num {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--accent);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .tab-btn:hover { color: var(--ink); }
+  .tab-btn.active {
+    color: var(--ink);
+    border-bottom-color: var(--accent);
+  }
+
+  /* ============ MAIN ============ */
+  main {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 48px 32px 80px;
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; animation: fadeIn 0.35s ease; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Panel header */
+  .panel-head {
+    margin-bottom: 40px;
+    max-width: 72ch;
+  }
+  .panel-head .eyebrow { margin-bottom: 14px; }
+  .panel-head h2 {
+    font-family: var(--serif);
+    font-size: clamp(28px, 3.5vw, 40px);
+    font-weight: 400;
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    margin-bottom: 16px;
+    font-variation-settings: "opsz" 144;
+  }
+  .panel-head p {
+    color: var(--ink-soft);
+    font-size: 16px;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* Two-column layout */
+  .calc-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 36px;
+    align-items: start;
+  }
+  @media (max-width: 960px) {
+    .calc-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ============ INPUT CARDS ============ */
+  .input-card {
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 0;
+    box-shadow: var(--shadow-sm);
+  }
+  .input-section {
+    padding: 22px 24px 24px;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  .input-section:last-child { border-bottom: 0; }
+  .section-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    font-size: 10px;
+    color: var(--accent);
+  }
+
+  .field {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 10px 14px;
+    padding: 10px 0;
+    border-bottom: 1px dotted var(--rule-soft);
+  }
+  .field:last-child { border-bottom: 0; }
+  .field-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13.5px;
+    color: var(--ink);
+    font-weight: 400;
+    line-height: 1.35;
+  }
+  .field-label .unit {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-muted);
+    font-weight: 400;
+  }
+  .info-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid var(--rule);
+    background: var(--bg-subtle);
+    color: var(--ink-muted);
+    font-family: var(--serif);
+    font-size: 10px;
+    font-style: italic;
+    font-weight: 500;
+    cursor: help;
+    flex-shrink: 0;
+    position: relative;
+    transition: all 0.15s ease;
+  }
+  .info-btn:hover {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--accent-dark);
+  }
+  .info-btn .tip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: var(--ink);
+    color: var(--bg);
+    padding: 10px 14px;
+    border-radius: 4px;
+    font-family: var(--sans);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5;
+    width: 260px;
+    text-align: left;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 100;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+  }
+  .info-btn .tip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: var(--ink);
+  }
+  .info-btn:hover .tip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  .info-btn .tip b { color: var(--accent-soft); font-weight: 600; }
+
+  .num-input {
+    width: 110px;
+    padding: 7px 10px;
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    border-radius: 3px;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    text-align: right;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .num-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: var(--bg-card);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+  .num-input:hover { border-color: var(--ink-muted); }
+
+  .preset-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 16px 24px;
+    background: var(--bg-subtle);
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  .preset-row .preset-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-muted);
+    display: flex;
+    align-items: center;
+    margin-right: 4px;
+  }
+  .preset-btn {
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 5px 11px;
+    border-radius: 999px;
+    cursor: pointer;
+    color: var(--ink-soft);
+    transition: all 0.15s ease;
+    letter-spacing: 0.02em;
+  }
+  .preset-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-soft);
+  }
+
+  /* ============ RESULT PANEL ============ */
+  .result-panel {
+    position: sticky;
+    top: 88px;
+  }
+  @media (max-width: 960px) {
+    .result-panel { position: static; }
+  }
+  .result-card {
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(26, 24, 20, 0.15);
+    position: relative;
+  }
+  .result-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent) 0%, #d4854d 100%);
+  }
+  .result-header {
+    padding: 26px 28px 18px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .result-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: rgba(250, 247, 242, 0.55);
+    margin-bottom: 10px;
+  }
+  .result-value {
+    font-family: var(--serif);
+    font-size: 54px;
+    font-weight: 350;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--bg);
+    font-variation-settings: "opsz" 144;
+  }
+  .result-value .unit-small {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: rgba(250, 247, 242, 0.6);
+    font-weight: 400;
+    margin-left: 8px;
+    letter-spacing: 0.05em;
+  }
+  .result-secondary {
+    padding: 18px 28px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .secondary-item .lbl {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(250, 247, 242, 0.5);
+    margin-bottom: 4px;
+  }
+  .secondary-item .val {
+    font-family: var(--mono);
+    font-size: 15px;
+    font-weight: 500;
+    color: rgba(250, 247, 242, 0.92);
+  }
+
+  .formula-block {
+    padding: 22px 28px 26px;
+    background: #0d0c0a;
+  }
+  .formula-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: rgba(250, 247, 242, 0.4);
+    margin-bottom: 14px;
+  }
+  .formula {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.75;
+    color: rgba(250, 247, 242, 0.88);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  .formula .acc { color: #e89866; font-weight: 500; }
+  .formula .var { color: #8fb080; }
+  .formula .num-val { color: #f7d5a8; }
+  .formula-divider {
+    border-top: 1px dashed rgba(255,255,255,0.15);
+    margin: 12px 0;
+  }
+
+  /* ============ METHODOLOGY TAB ============ */
+  .meth-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-top: 20px;
+  }
+  @media (max-width: 900px) { .meth-grid { grid-template-columns: 1fr; } }
+  .meth-card {
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 28px;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+  }
+  .meth-card .meth-num {
+    font-family: var(--serif);
+    font-size: 44px;
+    font-weight: 300;
+    color: var(--accent);
+    line-height: 1;
+    font-style: italic;
+    font-variation-settings: "opsz" 144;
+  }
+  .meth-card h3 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 500;
+    margin: 12px 0 14px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .meth-card p {
+    color: var(--ink-soft);
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  .meth-card .meth-formula {
+    font-family: var(--mono);
+    font-size: 12px;
+    background: var(--bg-inset);
+    padding: 12px 14px;
+    border-radius: 3px;
+    margin: 14px 0;
+    line-height: 1.6;
+    color: var(--ink);
+    border-left: 2px solid var(--accent);
+  }
+  .meth-card .meth-unit {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-muted);
+    padding-top: 14px;
+    margin-top: 14px;
+    border-top: 1px dotted var(--rule);
+  }
+  .meth-card .meth-unit b { color: var(--accent); font-weight: 600; }
+
+  .comparison-table {
+    margin-top: 56px;
+    background: var(--bg-card);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .comparison-table h3 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 500;
+    padding: 22px 28px 6px;
+    letter-spacing: -0.01em;
+  }
+  .comparison-table .sub {
+    padding: 0 28px 20px;
+    color: var(--ink-soft);
+    font-size: 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .comparison-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+  .comparison-table th {
+    text-align: left;
+    padding: 14px 20px;
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-muted);
+    background: var(--bg-subtle);
+    border-bottom: 1px solid var(--rule);
+    font-weight: 600;
+  }
+  .comparison-table td {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--rule-soft);
+    vertical-align: top;
+  }
+  .comparison-table tr:last-child td { border-bottom: 0; }
+  .comparison-table td:first-child {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-muted);
+    font-weight: 500;
+    width: 180px;
+  }
+
+  /* ============ FOOTER ============ */
+  footer.site-foot {
+    border-top: 1px solid var(--rule);
+    background: var(--bg-subtle);
+    padding: 36px 32px;
+    margin-top: 40px;
+  }
+  .foot-wrap {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .foot-note {
+    font-size: 12.5px;
+    color: var(--ink-muted);
+    max-width: 52ch;
+    line-height: 1.6;
+  }
+  .foot-note b { color: var(--ink-soft); font-weight: 500; }
+  .foot-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-muted);
+    text-align: right;
+  }
+
+  /* Accent details */
+  ::selection { background: var(--accent-soft); color: var(--accent-dark); }
+
+  /* Ore-type selector for Case B */
+  .ore-toggle {
+    display: inline-flex;
+    background: var(--bg-inset);
+    border-radius: 3px;
+    padding: 3px;
+    margin-bottom: 14px;
+    font-family: var(--mono);
+    font-size: 11px;
+  }
+  .ore-toggle button {
+    border: 0;
+    background: transparent;
+    padding: 6px 14px;
+    border-radius: 2px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 500;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .ore-toggle button.active {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  /* Metal-table for Case C */
+  .metal-table {
+    width: 100%;
+    font-size: 12.5px;
+    margin: 8px 0 4px;
+  }
+  .metal-table th {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-muted);
+    padding: 8px 6px;
+    text-align: right;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  .metal-table th:first-child {
+    text-align: left;
+  }
+  .metal-table td {
+    padding: 7px 6px;
+    border-bottom: 1px dotted var(--rule-soft);
+  }
+  .metal-table td:first-child {
+    font-family: var(--serif);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+  .metal-table .mini-input {
+    width: 74px;
+    padding: 4px 7px;
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    border-radius: 2px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    text-align: right;
+    color: var(--ink);
+  }
+  .metal-table .mini-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: var(--bg-card);
+  }
+  .metal-nsr {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* Helper: cost summary panel below result */
+  .breakdown {
+    padding: 20px 28px;
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 4px 0;
+    color: rgba(250, 247, 242, 0.78);
+  }
+  .breakdown-row.total {
+    margin-top: 8px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(255,255,255,0.18);
+    font-weight: 600;
+    color: var(--bg);
+  }
+  .breakdown-row.nsr { color: #8fb080; }
+  .breakdown-row.cost { color: #d4946a; }
+
+</style>
+</head>
+<body>
+
+<header class="site-head">
+  <div class="head-wrap">
+    <div class="brand">
+      <div class="brand-mark" data-i18n="brand">MineCalc</div>
+      <div class="brand-sub" data-i18n="brand_sub">Cutoff Grade Toolkit for Mining Engineers</div>
+    </div>
+    <div class="lang-toggle" role="tablist">
+      <button class="active" data-lang="en">EN</button>
+      <button data-lang="ru">RU</button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ REGISTRATION MODAL ============ -->
+<div id="regOverlay" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(26,24,20,0.55); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center;">
+  <div style="background:#fff; border-radius:16px; padding:40px 36px 32px; max-width:420px; width:90%; box-shadow:0 24px 80px rgba(0,0,0,0.18); font-family:var(--sans);">
+    <div style="font-family:var(--serif); font-size:22px; font-weight:600; margin-bottom:4px; font-variation-settings:'opsz' 40;">Welcome to MineCalc</div>
+    <p id="regSubtitle" style="color:var(--ink-muted); font-size:13px; margin-bottom:24px; line-height:1.5;">Register once to access all three cutoff grade calculators. Free forever.</p>
+    <form id="regForm" autocomplete="on">
+      <label style="display:block; margin-bottom:14px;">
+        <span style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); display:block; margin-bottom:5px;" id="regLabelName">Full Name</span>
+        <input id="regName" type="text" required placeholder="John Smith" style="width:100%; padding:10px 14px; border:1.5px solid var(--rule); border-radius:8px; font-size:15px; font-family:inherit; outline:none; transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rule)'">
+      </label>
+      <label style="display:block; margin-bottom:14px;">
+        <span style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); display:block; margin-bottom:5px;" id="regLabelEmail">Work Email</span>
+        <input id="regEmail" type="email" required placeholder="john@mining.com" style="width:100%; padding:10px 14px; border:1.5px solid var(--rule); border-radius:8px; font-size:15px; font-family:inherit; outline:none; transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rule)'">
+      </label>
+      <label style="display:block; margin-bottom:24px;">
+        <span style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); display:block; margin-bottom:5px;" id="regLabelCompany">Company / University</span>
+        <input id="regCompany" type="text" required placeholder="Acme Mining Ltd." style="width:100%; padding:10px 14px; border:1.5px solid var(--rule); border-radius:8px; font-size:15px; font-family:inherit; outline:none; transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rule)'">
+      </label>
+      <button id="regSubmitBtn" type="submit" style="width:100%; padding:12px; background:var(--accent); color:#fff; border:none; border-radius:8px; font-size:15px; font-weight:600; font-family:inherit; cursor:pointer; transition:background 0.2s;">Get Access</button>
+      <p style="text-align:center; font-size:11px; color:var(--ink-muted); margin-top:12px; line-height:1.4;" id="regDisclaimer">Your data is stored securely and never shared with third parties.</p>
+    </form>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="eyebrow" data-i18n="hero_eyebrow">Mining Economics · Reference Tool</div>
+  <h1 class="hero-title" data-i18n="hero_title">Three ways to calculate <em>cutoff grade</em> — built on the same numbers.</h1>
+  <p class="hero-lede" data-i18n="hero_lede">An interactive reference that makes the difference between the GKZ grade-based method, the single-metal concentrate method, and the full NSR approach visible and testable. Every field has a tooltip. Every formula is shown in the open.</p>
+  <div class="hero-meta">
+    <div>
+      <span data-i18n="meta_author">Author</span>
+      <strong>Ualikhan Aknazarov</strong>
+    </div>
+    <div>
+      <span data-i18n="meta_affil">Affiliation</span>
+      <strong data-i18n="meta_affil_val">Imperial College London · Responsible Mining and Metal Finance</strong>
+    </div>
+    <div>
+      <span data-i18n="meta_version">Version</span>
+      <strong>1.0 · April 2026</strong>
+    </div>
+    <div>
+      <span data-i18n="meta_data">Data</span>
+      <strong data-i18n="meta_data_val">Anonymised · Illustrative only</strong>
+    </div>
+  </div>
+</section>
+
+<nav class="tab-bar">
+  <button class="tab-btn active" data-tab="caseA">
+    <span class="tab-num">CASE A</span>
+    <span data-i18n="tab_a">Au–Ag · GKZ method</span>
+  </button>
+  <button class="tab-btn" data-tab="caseB">
+    <span class="tab-num">CASE B</span>
+    <span data-i18n="tab_b">Tin · Single metal</span>
+  </button>
+  <button class="tab-btn" data-tab="caseC">
+    <span class="tab-num">CASE C</span>
+    <span data-i18n="tab_c">Polymetallic · NSR</span>
+  </button>
+  <button class="tab-btn" data-tab="method">
+    <span class="tab-num">REF</span>
+    <span data-i18n="tab_m">Methodology</span>
+  </button>
+</nav>
+
+<main>
+
+<!-- ============ CASE A ============ -->
+<section class="tab-panel active" id="caseA">
+  <div class="panel-head">
+    <div class="eyebrow" data-i18n="a_eyebrow">Case A · Gold-silver vein deposit</div>
+    <h2 data-i18n="a_title">The grade-based approach, as practised in the GKZ tradition.</h2>
+    <p data-i18n="a_desc">Cutoff grade is expressed in grams per tonne of ore as gold-equivalent (GE). Silver is converted to gold via the ratio of net prices and payable fractions. This is the method most field geologists in CIS countries learned first — intuitive, transparent, but it hides the concentrate-handling layer.</p>
+  </div>
+
+  <div class="preset-row">
+    <span class="preset-label" data-i18n="preset_label">Presets:</span>
+    <button class="preset-btn" data-preset="a1" data-i18n="a_preset1">Underground, typical</button>
+    <button class="preset-btn" data-preset="a2" data-i18n="a_preset2">Open-pit, high-grade</button>
+  </div>
+
+  <div class="calc-grid">
+    <div class="input-card">
+
+      <div class="input-section">
+        <div class="section-title"><span class="num">1</span><span data-i18n="a_sec1">Metal prices &amp; payable fractions</span></div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="a_f_pau">Gold price</span> <span class="unit">$/oz</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="a_t_pau_t">LBMA spot price</b><br><span data-i18n="a_t_pau_d">Troy ounce (31.1035 g). Typical range 2020s: $1,800–5,000/oz. Use 3-year trailing average for conservative planning.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="a_pau" value="4500" step="50">
+        </div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="a_f_pag">Silver price</span> <span class="unit">$/oz</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="a_t_pag_t">LBMA spot price</b><br><span data-i18n="a_t_pag_d">Gold-to-silver ratio typically 60–90 in equilibrium. Silver is more volatile than gold, so be cautious.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="a_pag" value="70" step="1">
+        </div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="a_f_payau">Gold payable fraction</span> <span class="unit">—</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="a_t_payau_t">Payable %</b><br><span data-i18n="a_t_payau_d">Share of gold in concentrate that the smelter actually pays for, after deductions, refining losses, and the minimum deduction (typically 1 g/t from Au content). Commonly 0.90–0.97 for gold concentrates.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="a_payau" value="0.95" step="0.01">
+        </div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="a_f_payag">Silver payable fraction</span> <span class="unit">—</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="a_t_payag_t">Payable %</b><br><span data-i18n="a_t_payag_d">Silver deductions are harsher than gold — typical payable 0.70–0.90 in concentrates, often with a 30 g/t minimum deduction.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="a_payag" value="0.85" step="0.01">
+        </div>
+      </div>
+
+      <div class="input-section">
+        <div class="section-title"><span class="num">2</span><span data-i18n="a_sec2">Royalties &amp; refining</span></div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="a_f_royau">Royalty on gold</span> <span class="unit">%</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="a_t_royau_t">Mineral Extraction Tax / NSR royalty</b><br><span data-i18n="a_t_royau_d">Typical: 5–6% for gold in several CIS jurisdictions. Applied to the revenue base before operating costs.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="a_royau" value="6" step="0.5">
+        </div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="a_f_royag">Royalty on silver</span> <span class="unit">%</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="a_t_royag_t">Silver royalty</b><br><span data-i18n="a_t_royag_d">Typically 5–7%. Often fixed by law for by-product metals.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="a_royag" value="6.5" step="0.5">
+        </div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="a_f_refau">Refining charge — gold</span> <span class="unit">$/g</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="a_t_refau_t">Refining Charge (R/C)</b><br><span data-i18n="a_t_refau_d">Cost per gram of payable gold to refine the metal at the smelter. Typical: $0.15–0.40/g. Subtracted from gross revenue.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="a_refau" value="0.25" step="0.05">
+        </div>
+      </div>
+
+      <div class="input-section">
+        <div class="section-title"><span class="num">3</span><span data-i18n="a_sec3">Recovery</span></div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="a_f_recau">Gold recovery</span> <span class="unit">%</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="a_t_recau_t">Metallurgical recovery</b><br><span data-i18n="a_t_recau_d">Share of gold in ore that ends up in the saleable concentrate. For gold-sulphide ores: 85–92% typical. For refractory ores: 60–80%.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="a_recau" value="86" step="1">
+        </div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="a_f_recag">Silver recovery</span> <span class="unit">%</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="a_t_recag_t">Silver recovery</b><br><span data-i18n="a_t_recag_d">Usually lower than gold — 40–70% — because silver reports partly to tailings or lead/zinc circuits.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="a_recag" value="47" step="1">
+        </div>
+      </div>
+
+      <div class="input-section">
+        <div class="section-title"><span class="num">4</span><span data-i18n="a_sec4">Operating costs</span></div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="a_f_cm">Mining cost</span> <span class="unit">$/t ore</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="a_t_cm_t">Mining operating cost</b><br><span data-i18n="a_t_cm_d">Drill, blast, load, haul from stope to surface. Open-pit: $2–8/t. Underground: $25–80/t depending on method (cut-and-fill, SLS, SLC).</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="a_cm" value="43.5" step="1">
+        </div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="a_f_ch">Haulage to mill</span> <span class="unit">$/t ore</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="a_t_ch_t">Ore transport</b><br><span data-i18n="a_t_ch_d">Surface haulage from portal/pit to processing plant. Often $0.4–2/t depending on distance.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="a_ch" value="0" step="0.5">
+        </div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="a_f_cp">Processing cost</span> <span class="unit">$/t ore</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="a_t_cp_t">Processing operating cost</b><br><span data-i18n="a_t_cp_d">Crushing, grinding, flotation/CIL, reagents, power. Typical: $10–30/t for conventional mills.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="a_cp" value="14.6" step="1">
+        </div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="a_f_cg">G&amp;A and other</span> <span class="unit">$/t ore</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="a_t_cg_t">General &amp; Admin</b><br><span data-i18n="a_t_cg_d">Site overhead, management, insurance, community. Typical: $2–8/t. Sometimes bundled into processing.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="a_cg" value="0" step="0.5">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="result-panel">
+      <div class="result-card">
+        <div class="result-header">
+          <div class="result-label" data-i18n="a_result_label">Break-even cutoff grade</div>
+          <div class="result-value"><span id="a_result">—</span><span class="unit-small" data-i18n="a_result_unit">g/t Au-eq</span></div>
+        </div>
+        <div class="result-secondary">
+          <div class="secondary-item">
+            <div class="lbl" data-i18n="a_sec_netau">Net Au price</div>
+            <div class="val"><span id="a_netau">—</span> $/g</div>
+          </div>
+          <div class="secondary-item">
+            <div class="lbl" data-i18n="a_sec_netag">Net Ag price</div>
+            <div class="val"><span id="a_netag">—</span> $/g</div>
+          </div>
+          <div class="secondary-item">
+            <div class="lbl" data-i18n="a_sec_tcost">Total cost</div>
+            <div class="val">$<span id="a_tcost">—</span>/t</div>
+          </div>
+          <div class="secondary-item">
+            <div class="lbl" data-i18n="a_sec_conv">Ag→Au factor</div>
+            <div class="val">÷<span id="a_k">—</span></div>
+          </div>
+        </div>
+        <div class="formula-block">
+          <div class="formula-title" data-i18n="a_formula_title">Calculation, shown in full</div>
+          <div class="formula" id="a_formula"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CASE B ============ -->
+<section class="tab-panel" id="caseB">
+  <div class="panel-head">
+    <div class="eyebrow" data-i18n="b_eyebrow">Case B · Tin deposit, open pit &amp; underground</div>
+    <h2 data-i18n="b_title">The single-metal concentrate approach.</h2>
+    <p data-i18n="b_desc">Cutoff grade is expressed in percent of tin in ore. Revenue starts from concentrate value — price × concentrate grade × payable — net of smelter terms and logistics. Costs split across mining, processing, G&A, and transport. This is the standard Russian consultant approach for monometallic deposits.</p>
+  </div>
+
+  <div class="preset-row">
+    <span class="preset-label" data-i18n="preset_label">Presets:</span>
+    <button class="preset-btn" data-preset="b1" data-i18n="b_preset1">Open pit</button>
+    <button class="preset-btn" data-preset="b2" data-i18n="b_preset2">Underground</button>
+  </div>
+
+  <div class="calc-grid">
+    <div class="input-card">
+
+      <div class="input-section">
+        <div class="section-title"><span class="num">1</span><span data-i18n="b_sec1">Concentrate &amp; payable</span></div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="b_f_pconc">Concentrate price</span> <span class="unit">$/t conc</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="b_t_pconc_t">Concentrate price</b><br><span data-i18n="b_t_pconc_d">Per tonne of saleable tin concentrate (grade × metal price × payable). For 60% Sn concentrate at $50k/t Sn price ≈ $30k/t conc gross.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="b_pconc" value="30000" step="500">
+        </div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="b_f_cgrade">Grade in concentrate</span> <span class="unit">%</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="b_t_cgrade_t">Concentrate grade</b><br><span data-i18n="b_t_cgrade_d">Typical tin concentrate spec: 55–65% Sn per GOST. Lower grade means penalties and more handling cost.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="b_cgrade" value="60" step="1">
+        </div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="b_f_payable">Payable fraction</span> <span class="unit">—</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="b_t_payable_t">Payable</b><br><span data-i18n="b_t_payable_d">For tin: 90–95% typical. Deductions cover refining losses and smelter margins.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="b_payable" value="0.95" step="0.01">
+        </div>
+      </div>
+
+      <div class="input-section">
+        <div class="section-title"><span class="num">2</span><span data-i18n="b_sec2">Recovery &amp; dilution</span></div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="b_f_rec">Metallurgical recovery</span> <span class="unit">%</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="b_t_rec_t">Sn recovery to concentrate</b><br><span data-i18n="b_t_rec_d">Tin is notoriously hard to recover — gravity + flotation: 50–70% typical. Fine-grained cassiterite is lost to slime fraction.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="b_rec" value="55" step="1">
+        </div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="b_f_dil">Dilution</span> <span class="unit">—</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="b_t_dil_t">Mining dilution</b><br><span data-i18n="b_t_dil_d">Share of waste rock mixed into ore during mining. OP: 0.05–0.15. UG: 0.10–0.25 depending on stoping method. Reduces effective grade.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="b_dil" value="0.2" step="0.01">
+        </div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="b_f_loss">Mining losses</span> <span class="unit">—</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="b_t_loss_t">Ore losses</b><br><span data-i18n="b_t_loss_d">Share of in-situ ore left unmined (pillars, remnants, boundaries). Typically 0.03–0.10 for OP, 0.05–0.20 for UG.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="b_loss" value="0.07" step="0.01">
+        </div>
+      </div>
+
+      <div class="input-section">
+        <div class="section-title"><span class="num">3</span><span data-i18n="b_sec3">Operating costs</span></div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="b_f_cm">Mining cost (ore)</span> <span class="unit">$/t ore</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="b_t_cm_t">Mining ore</b><br><span data-i18n="b_t_cm_d">Open-pit ore mining: $2–8/t. Underground: $25–80/t. Includes drill, blast, load, haul to ROM pad.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="b_cm" value="19.6" step="1">
+        </div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="b_f_cw">Waste mining (per t ore)</span> <span class="unit">$/t ore</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="b_t_cw_t">Waste cost, allocated</b><br><span data-i18n="b_t_cw_d">Open-pit only. = Stripping ratio × cost per tonne of waste. For UG this is zero or development-only.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="b_cw" value="2.37" step="0.1">
+        </div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="b_f_cp">Processing cost</span> <span class="unit">$/t ore</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="b_t_cp_t">Processing cost</b><br><span data-i18n="b_t_cp_d">Crushing, grinding, gravity + flotation for tin. Typical: $10–15/t.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="b_cp" value="11.67" step="0.5">
+        </div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="b_f_cg">G&amp;A</span> <span class="unit">$/t ore</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="b_t_cg_t">General &amp; Admin</b><br><span data-i18n="b_t_cg_d">Site management, support functions, insurance. Typically 10–20% of total operating cost.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="b_cg" value="12.23" step="0.5">
+        </div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="b_f_ctl">Logistics to port</span> <span class="unit">$/t conc</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="b_t_ctl_t">Concentrate logistics</b><br><span data-i18n="b_t_ctl_d">Road/rail from mill to export port. For remote Asian mines: $80–180/t concentrate.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="b_ctl" value="123" step="5">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="result-panel">
+      <div class="result-card">
+        <div class="result-header">
+          <div class="result-label" data-i18n="b_result_label">Break-even cutoff grade</div>
+          <div class="result-value"><span id="b_result">—</span><span class="unit-small" data-i18n="b_result_unit">% Sn</span></div>
+        </div>
+        <div class="result-secondary">
+          <div class="secondary-item">
+            <div class="lbl" data-i18n="b_sec_netrev">Net revenue factor</div>
+            <div class="val"><span id="b_netrev">—</span> $/t</div>
+          </div>
+          <div class="secondary-item">
+            <div class="lbl" data-i18n="b_sec_tcost">Total cost</div>
+            <div class="val">$<span id="b_tcost">—</span>/t</div>
+          </div>
+          <div class="secondary-item">
+            <div class="lbl" data-i18n="b_sec_pms">Price × Payable × Grade</div>
+            <div class="val"><span id="b_pms">—</span> $/t</div>
+          </div>
+          <div class="secondary-item">
+            <div class="lbl" data-i18n="b_sec_dilf">Dilution factor</div>
+            <div class="val">× <span id="b_dilf">—</span></div>
+          </div>
+        </div>
+        <div class="formula-block">
+          <div class="formula-title" data-i18n="b_formula_title">Calculation, shown in full</div>
+          <div class="formula" id="b_formula"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CASE C ============ -->
+<section class="tab-panel" id="caseC">
+  <div class="panel-head">
+    <div class="eyebrow" data-i18n="c_eyebrow">Case C · Polymetallic VMS deposit · Zn-Pb-Cu-Au-Ag</div>
+    <h2 data-i18n="c_title">The Net Smelter Return approach — what CIM, JORC and NI 43-101 expect.</h2>
+    <p data-i18n="c_desc">Cutoff is expressed in dollars per tonne of ore, not grade. Each metal contributes to revenue via its own Payable × Recovery × (Price − R/C), net of T/C, transport and royalty. Sum across metals = NSR. Set NSR = Total Cost to find the break-even NSR cutoff, and the equivalent cutoff grade for any single metal falls out of the NSR coefficient.</p>
+  </div>
+
+  <div class="preset-row">
+    <span class="preset-label" data-i18n="preset_label">Presets:</span>
+    <button class="preset-btn" data-preset="c1" data-i18n="c_preset1">Sulphide ore</button>
+    <button class="preset-btn" data-preset="c2" data-i18n="c_preset2">Cu-rich ore</button>
+  </div>
+
+  <div class="calc-grid">
+    <div class="input-card">
+
+      <div class="input-section">
+        <div class="section-title"><span class="num">1</span><span data-i18n="c_sec1">Metals — prices, grades, recoveries, payable</span></div>
+        <table class="metal-table">
+          <thead>
+            <tr>
+              <th data-i18n="c_col_metal">Metal</th>
+              <th data-i18n="c_col_price">Price</th>
+              <th data-i18n="c_col_unit">Unit</th>
+              <th data-i18n="c_col_grade">Grade</th>
+              <th data-i18n="c_col_rec">Recov %</th>
+              <th data-i18n="c_col_pay">Payable</th>
+            </tr>
+          </thead>
+          <tbody id="c_metal_rows"></tbody>
+        </table>
+        <div style="font-family: var(--mono); font-size: 10.5px; color: var(--ink-muted); margin-top: 12px; line-height: 1.5;">
+          <span data-i18n="c_hint1">Grade in % for base metals, g/t for Au &amp; Ag. Each row is one metal contributing to the aggregate NSR.</span>
+        </div>
+      </div>
+
+      <div class="input-section">
+        <div class="section-title"><span class="num">2</span><span data-i18n="c_sec2">Smelter terms &amp; logistics</span></div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="c_f_tc">Treatment charge (T/C)</span> <span class="unit">$/t conc</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="c_t_tc_t">Smelter Treatment Charge</b><br><span data-i18n="c_t_tc_d">Paid by the mine to the smelter, per tonne of concentrate delivered. Typical: $150–300/t. Volatile with smelter capacity balance globally.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="c_tc" value="250" step="10" data-default="250">
+        </div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="c_f_transp">Concentrate transport</span> <span class="unit">$/t conc</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="c_t_transp_t">Concentrate transport</b><br><span data-i18n="c_t_transp_d">From mill gate to smelter or export port. $30–200/t depending on logistics chain and distance.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="c_transp" value="95" step="5">
+        </div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="c_f_concratio">Concentrate yield</span> <span class="unit">t conc / t ore</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="c_t_concratio_t">Concentrate mass pull</b><br><span data-i18n="c_t_concratio_d">Tonnes of combined concentrate produced per tonne of ore milled. Typical VMS with mixed flotation: 0.08–0.15. This is used to scale per-concentrate T/C and transport into $/t ore.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="c_concratio" value="0.10" step="0.01">
+        </div>
+      </div>
+
+      <div class="input-section">
+        <div class="section-title"><span class="num">3</span><span data-i18n="c_sec3">Operating costs &amp; royalty</span></div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="c_f_cm">Mining cost</span> <span class="unit">$/t ore</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="c_t_cm_t">Mining operating cost</b><br><span data-i18n="c_t_cm_d">UG polymetallic mines: $35–70/t typical. Includes drill, blast, load, haul from stope to surface.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="c_cm" value="48" step="1">
+        </div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="c_f_cp">Processing cost</span> <span class="unit">$/t ore</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="c_t_cp_t">Milling cost</b><br><span data-i18n="c_t_cp_d">Polymetallic flotation circuit — sequential or bulk. Typical: $12–25/t.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="c_cp" value="15.0" step="0.5">
+        </div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="c_f_cg">G&amp;A</span> <span class="unit">$/t ore</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="c_t_cg_t">General &amp; Admin</b><br><span data-i18n="c_t_cg_d">Typical: $2–5/t. Management, insurance, permits, community.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="c_cg" value="2.5" step="0.2">
+        </div>
+
+        <div class="field">
+          <label class="field-label">
+            <span><span data-i18n="c_f_roy">Royalty (blended)</span> <span class="unit">%</span></span>
+            <span class="info-btn">i
+              <span class="tip"><b data-i18n="c_t_roy_t">Royalty / MET</b><br><span data-i18n="c_t_roy_d">Weighted average royalty across all payable metals. Applied to NSR as simplification. Typical 4–8% blended.</span></span>
+            </span>
+          </label>
+          <input type="number" class="num-input" id="c_roy" value="6" step="0.5">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="result-panel">
+      <div class="result-card">
+        <div class="result-header">
+          <div class="result-label" data-i18n="c_result_label">Break-even NSR cutoff</div>
+          <div class="result-value"><span id="c_result">—</span><span class="unit-small" data-i18n="c_result_unit">$/t ore</span></div>
+        </div>
+        <div class="breakdown">
+          <div class="breakdown-row nsr"><span data-i18n="c_br_nsr">Aggregate NSR (at current grades)</span><span>$<span id="c_nsr">—</span>/t</span></div>
+          <div class="breakdown-row cost"><span data-i18n="c_br_cost">Total operating cost</span><span>$<span id="c_tcost">—</span>/t</span></div>
+          <div class="breakdown-row total"><span data-i18n="c_br_marg">Operating margin @ current grade</span><span>$<span id="c_margin">—</span>/t</span></div>
+        </div>
+        <div class="formula-block">
+          <div class="formula-title" data-i18n="c_formula_title">Calculation, shown in full</div>
+          <div class="formula" id="c_formula"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ METHODOLOGY ============ -->
+<section class="tab-panel" id="method">
+  <div class="panel-head">
+    <div class="eyebrow" data-i18n="m_eyebrow">Reference · Methodology notes</div>
+    <h2 data-i18n="m_title">Same ore body. Three answers. Here's why.</h2>
+    <p data-i18n="m_desc">Each method embeds a different view of the revenue chain and a different comfort with smelter-term complexity. None is universally correct — each is the right tool for a specific reporting context. Understanding why they disagree is the point.</p>
+  </div>
+
+  <div class="meth-grid">
+    <div class="meth-card">
+      <div class="meth-num">I</div>
+      <h3 data-i18n="m1_h">GKZ grade-based</h3>
+      <p data-i18n="m1_p">Revenue is a single net price per gram of metal (or Au-equivalent), stripped of royalty and refining. Costs are lumped per tonne of ore. Cutoff is grade at which revenue = cost. Silver and by-products enter via the Au-equivalent conversion factor.</p>
+      <div class="meth-formula">BC<sub>GE</sub> = Cost / (Price<sub>net</sub> × Recovery × Payable)</div>
+      <p data-i18n="m1_use"><b data-i18n="m1_use_b">When to use:</b> resource reporting under GKZ/KZ/RK codes, feasibility work in CIS, internal cutoff decisions where smelter contracts are stable and simple.</p>
+      <div class="meth-unit" data-i18n="m1_out">Output: <b>grade</b> (g/t or %)</div>
+    </div>
+
+    <div class="meth-card">
+      <div class="meth-num">II</div>
+      <h3 data-i18n="m2_h">Single-metal concentrate</h3>
+      <p data-i18n="m2_p">Revenue is concentrate price × concentrate grade × payable, allowing for dilution and mining losses that reduce the grade that arrives at the mill. Logistics and G&amp;A explicit. Only one metal.</p>
+      <div class="meth-formula">BC<sub>%</sub> = Cost / (P<sub>c</sub> × C<sub>gr</sub> × Pay × Rec × (1 − Dil) × (1 − Loss))</div>
+      <p data-i18n="m2_use"><b data-i18n="m2_use_b">When to use:</b> monometallic deposits (Sn, W, Mo, some Cu) where concentrate is the saleable product, and smelter terms are baked into an agreed concentrate price.</p>
+      <div class="meth-unit" data-i18n="m2_out">Output: <b>grade</b> (% or g/t)</div>
+    </div>
+
+    <div class="meth-card">
+      <div class="meth-num">III</div>
+      <h3 data-i18n="m3_h">Net Smelter Return</h3>
+      <p data-i18n="m3_p">Each metal gets a full treatment: Price minus R/C, times Payable, times Recovery, summed across all payable metals → NSR per tonne of ore. Compared directly to total operating cost.</p>
+      <div class="meth-formula">NSR = Σ<sub>metals</sub> [Grade × Rec × Pay × (P − R/C)] − T/C − Transport<br>BC = Total Cost (NSR = Cost at cutoff)</div>
+      <p data-i18n="m3_use"><b data-i18n="m3_use_b">When to use:</b> polymetallic deposits, Western reporting (NI 43-101, JORC, SAMREC), project finance, any context where by-product credits materially change economics.</p>
+      <div class="meth-unit" data-i18n="m3_out">Output: <b>$/t ore</b> (or equivalent grade via NSR coefficient)</div>
+    </div>
+  </div>
+
+  <div class="comparison-table">
+    <h3 data-i18n="m_comp_h">Decision grid — which method fits your case</h3>
+    <div class="sub" data-i18n="m_comp_sub">A practical chooser. In reality, most feasibility studies run two methods in parallel and reconcile.</div>
+    <table>
+      <thead>
+        <tr>
+          <th data-i18n="m_th_crit">Criterion</th>
+          <th data-i18n="m_th_a">Case A · GKZ</th>
+          <th data-i18n="m_th_b">Case B · Concentrate</th>
+          <th data-i18n="m_th_c">Case C · NSR</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-i18n="m_r1_c">Number of payable metals</td>
+          <td data-i18n="m_r1_a">1 metal + equivalents</td>
+          <td data-i18n="m_r1_b">1 metal only</td>
+          <td data-i18n="m_r1_cc">Many (unlimited)</td>
+        </tr>
+        <tr>
+          <td data-i18n="m_r2_c">Smelter-term visibility</td>
+          <td data-i18n="m_r2_a">Hidden in net price</td>
+          <td data-i18n="m_r2_b">Partially explicit</td>
+          <td data-i18n="m_r2_cc">Fully explicit</td>
+        </tr>
+        <tr>
+          <td data-i18n="m_r3_c">Dilution / losses handling</td>
+          <td data-i18n="m_r3_a">External, applied later</td>
+          <td data-i18n="m_r3_b">Built into formula</td>
+          <td data-i18n="m_r3_cc">External (applied to grade)</td>
+        </tr>
+        <tr>
+          <td data-i18n="m_r4_c">Output unit</td>
+          <td data-i18n="m_r4_a">g/t or %</td>
+          <td data-i18n="m_r4_b">g/t or %</td>
+          <td data-i18n="m_r4_cc">$/t ore, or NSR coefficient × grade</td>
+        </tr>
+        <tr>
+          <td data-i18n="m_r5_c">Typical reporting context</td>
+          <td data-i18n="m_r5_a">GKZ, KZ-RK</td>
+          <td data-i18n="m_r5_b">Feasibility (monometallic)</td>
+          <td data-i18n="m_r5_cc">NI 43-101, JORC, SAMREC</td>
+        </tr>
+        <tr>
+          <td data-i18n="m_r6_c">Sensitivity to metal mix changes</td>
+          <td data-i18n="m_r6_a">Low (via equivalent factor)</td>
+          <td data-i18n="m_r6_b">None</td>
+          <td data-i18n="m_r6_cc">High (first-order)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-foot">
+  <div class="foot-wrap">
+    <div class="foot-note">
+      <b data-i18n="foot_b">All figures are illustrative.</b> <span data-i18n="foot_body">Project names, operators and deposit identifiers have been removed. Parameters are ordered to typical industry ranges but do not represent any specific asset, contract, or concentrate marketing agreement. Use for education and methodology discussion only — not for commercial decisions.</span>
+    </div>
+    <div class="foot-meta" data-i18n="foot_meta">MineCalc · v1.0 · Apr 2026</div>
+  </div>
+</footer>
+
+<script>
+// ============ TRANSLATIONS ============
+const I18N = {
+  en: {
+    brand: "MineCalc",
+    brand_sub: "Cutoff Grade Toolkit for Mining Engineers",
+    hero_eyebrow: "Mining Economics · Reference Tool",
+    hero_title: "Three ways to calculate <em>cutoff grade</em> — built on the same numbers.",
+    hero_lede: "An interactive reference that makes the difference between the GKZ grade-based method, the single-metal concentrate method, and the full NSR approach visible and testable. Every field has a tooltip. Every formula is shown in the open.",
+    meta_author: "Author",
+    meta_affil: "Affiliation",
+    meta_affil_val: "Imperial College London · Responsible Mining and Metal Finance",
+    meta_version: "Version",
+    meta_data: "Data",
+    meta_data_val: "Anonymised · Illustrative only",
+    tab_a: "Au–Ag · GKZ method",
+    tab_b: "Tin · Single metal",
+    tab_c: "Polymetallic · NSR",
+    tab_m: "Methodology",
+    preset_label: "Presets:",
+
+    // Case A
+    a_eyebrow: "Case A · Gold-silver vein deposit",
+    a_title: "The grade-based approach, as practised in the GKZ tradition.",
+    a_desc: "Cutoff grade is expressed in grams per tonne of ore as gold-equivalent (GE). Silver is converted to gold via the ratio of net prices and payable fractions. This is the method most field geologists in CIS countries learned first — intuitive, transparent, but it hides the concentrate-handling layer.",
+    a_preset1: "Underground, typical",
+    a_preset2: "Open-pit, high-grade",
+    a_sec1: "Metal prices & payable fractions",
+    a_sec2: "Royalties & refining",
+    a_sec3: "Recovery",
+    a_sec4: "Operating costs",
+    a_f_pau: "Gold price", a_f_pag: "Silver price",
+    a_f_payau: "Gold payable fraction", a_f_payag: "Silver payable fraction",
+    a_f_royau: "Royalty on gold", a_f_royag: "Royalty on silver",
+    a_f_refau: "Refining charge — gold",
+    a_f_recau: "Gold recovery", a_f_recag: "Silver recovery",
+    a_f_cm: "Mining cost", a_f_ch: "Haulage to mill", a_f_cp: "Processing cost", a_f_cg: "G&A and other",
+    a_t_pau_t: "LBMA spot price", a_t_pau_d: "Troy ounce (31.1035 g). Typical range 2020s: $1,800–5,000/oz. Use 3-year trailing average for conservative planning.",
+    a_t_pag_t: "LBMA spot price", a_t_pag_d: "Gold-to-silver ratio typically 60–90 in equilibrium. Silver is more volatile than gold, so be cautious.",
+    a_t_payau_t: "Payable %", a_t_payau_d: "Share of gold in concentrate that the smelter actually pays for, after deductions, refining losses, and the minimum deduction (typically 1 g/t from Au content). Commonly 0.90–0.97 for gold concentrates.",
+    a_t_payag_t: "Payable %", a_t_payag_d: "Silver deductions are harsher than gold — typical payable 0.70–0.90 in concentrates, often with a 30 g/t minimum deduction.",
+    a_t_royau_t: "Mineral Extraction Tax / NSR royalty", a_t_royau_d: "Typical: 5–6% for gold in several CIS jurisdictions. Applied to the revenue base before operating costs.",
+    a_t_royag_t: "Silver royalty", a_t_royag_d: "Typically 5–7%. Often fixed by law for by-product metals.",
+    a_t_refau_t: "Refining Charge (R/C)", a_t_refau_d: "Cost per gram of payable gold to refine the metal at the smelter. Typical: $0.15–0.40/g. Subtracted from gross revenue.",
+    a_t_recau_t: "Metallurgical recovery", a_t_recau_d: "Share of gold in ore that ends up in the saleable concentrate. For gold-sulphide ores: 85–92% typical. For refractory ores: 60–80%.",
+    a_t_recag_t: "Silver recovery", a_t_recag_d: "Usually lower than gold — 40–70% — because silver reports partly to tailings or lead/zinc circuits.",
+    a_t_cm_t: "Mining operating cost", a_t_cm_d: "Drill, blast, load, haul from stope to surface. Open-pit: $2–8/t. Underground: $25–80/t depending on method (cut-and-fill, SLS, SLC).",
+    a_t_ch_t: "Ore transport", a_t_ch_d: "Surface haulage from portal/pit to processing plant. Often $0.4–2/t depending on distance.",
+    a_t_cp_t: "Processing operating cost", a_t_cp_d: "Crushing, grinding, flotation/CIL, reagents, power. Typical: $10–30/t for conventional mills.",
+    a_t_cg_t: "General & Admin", a_t_cg_d: "Site overhead, management, insurance, community. Typical: $2–8/t. Sometimes bundled into processing.",
+    a_result_label: "Break-even cutoff grade", a_result_unit: "g/t Au-eq",
+    a_sec_netau: "Net Au price", a_sec_netag: "Net Ag price", a_sec_tcost: "Total cost", a_sec_conv: "Ag→Au factor",
+    a_formula_title: "Calculation, shown in full",
+
+    // Case B
+    b_eyebrow: "Case B · Tin deposit, open pit & underground",
+    b_title: "The single-metal concentrate approach.",
+    b_desc: "Cutoff grade is expressed in percent of tin in ore. Revenue starts from concentrate value — price × concentrate grade × payable — net of smelter terms and logistics. Costs split across mining, processing, G&A, and transport. This is the standard Russian consultant approach for monometallic deposits.",
+    b_preset1: "Open pit", b_preset2: "Underground",
+    b_sec1: "Concentrate & payable", b_sec2: "Recovery & dilution", b_sec3: "Operating costs",
+    b_f_pconc: "Concentrate price", b_f_cgrade: "Grade in concentrate", b_f_payable: "Payable fraction",
+    b_f_rec: "Metallurgical recovery", b_f_dil: "Dilution", b_f_loss: "Mining losses",
+    b_f_cm: "Mining cost (ore)", b_f_cw: "Waste mining (per t ore)", b_f_cp: "Processing cost", b_f_cg: "G&A", b_f_ctl: "Logistics to port",
+    b_t_pconc_t: "Concentrate price", b_t_pconc_d: "Per tonne of saleable tin concentrate (grade × metal price × payable). For 60% Sn concentrate at $50k/t Sn price ≈ $30k/t conc gross.",
+    b_t_cgrade_t: "Concentrate grade", b_t_cgrade_d: "Typical tin concentrate spec: 55–65% Sn per GOST. Lower grade means penalties and more handling cost.",
+    b_t_payable_t: "Payable", b_t_payable_d: "For tin: 90–95% typical. Deductions cover refining losses and smelter margins.",
+    b_t_rec_t: "Sn recovery to concentrate", b_t_rec_d: "Tin is notoriously hard to recover — gravity + flotation: 50–70% typical. Fine-grained cassiterite is lost to slime fraction.",
+    b_t_dil_t: "Mining dilution", b_t_dil_d: "Share of waste rock mixed into ore during mining. OP: 0.05–0.15. UG: 0.10–0.25 depending on stoping method. Reduces effective grade.",
+    b_t_loss_t: "Ore losses", b_t_loss_d: "Share of in-situ ore left unmined (pillars, remnants, boundaries). Typically 0.03–0.10 for OP, 0.05–0.20 for UG.",
+    b_t_cm_t: "Mining ore", b_t_cm_d: "Open-pit ore mining: $2–8/t. Underground: $25–80/t. Includes drill, blast, load, haul to ROM pad.",
+    b_t_cw_t: "Waste cost, allocated", b_t_cw_d: "Open-pit only. = Stripping ratio × cost per tonne of waste. For UG this is zero or development-only.",
+    b_t_cp_t: "Processing cost", b_t_cp_d: "Crushing, grinding, gravity + flotation for tin. Typical: $10–15/t.",
+    b_t_cg_t: "General & Admin", b_t_cg_d: "Site management, support functions, insurance. Typically 10–20% of total operating cost.",
+    b_t_ctl_t: "Concentrate logistics", b_t_ctl_d: "Road/rail from mill to export port. For remote Asian mines: $80–180/t concentrate.",
+    b_result_label: "Break-even cutoff grade", b_result_unit: "% Sn",
+    b_sec_netrev: "Net revenue factor", b_sec_tcost: "Total cost", b_sec_pms: "Price × Payable × Grade", b_sec_dilf: "Dilution factor",
+    b_formula_title: "Calculation, shown in full",
+
+    // Case C
+    c_eyebrow: "Case C · Polymetallic VMS deposit · Zn-Pb-Cu-Au-Ag",
+    c_title: "The Net Smelter Return approach — what CIM, JORC and NI 43-101 expect.",
+    c_desc: "Cutoff is expressed in dollars per tonne of ore, not grade. Each metal contributes to revenue via its own Payable × Recovery × (Price − R/C), net of T/C, transport and royalty. Sum across metals = NSR. Set NSR = Total Cost to find the break-even NSR cutoff, and the equivalent cutoff grade for any single metal falls out of the NSR coefficient.",
+    c_preset1: "Sulphide ore", c_preset2: "Cu-rich ore",
+    c_sec1: "Metals — prices, grades, recoveries, payable",
+    c_sec2: "Smelter terms & logistics",
+    c_sec3: "Operating costs & royalty",
+    c_col_metal: "Metal", c_col_price: "Price", c_col_unit: "Unit", c_col_grade: "Grade", c_col_rec: "Recov %", c_col_pay: "Payable",
+    c_hint1: "Grade in % for base metals, g/t for Au & Ag. Each row is one metal contributing to the aggregate NSR.",
+    c_f_tc: "Treatment charge (T/C)", c_f_transp: "Concentrate transport", c_f_concratio: "Concentrate yield",
+    c_t_tc_t: "Smelter Treatment Charge", c_t_tc_d: "Paid by the mine to the smelter, per tonne of concentrate delivered. Typical: $150–300/t. Volatile with smelter capacity balance globally.",
+    c_t_transp_t: "Concentrate transport", c_t_transp_d: "From mill gate to smelter or export port. $30–200/t depending on logistics chain and distance.",
+    c_t_concratio_t: "Concentrate mass pull", c_t_concratio_d: "Tonnes of combined concentrate produced per tonne of ore milled. Typical VMS with mixed flotation: 0.08–0.15. This is used to scale per-concentrate T/C and transport into $/t ore.",
+    c_f_cm: "Mining cost", c_f_cp: "Processing cost", c_f_cg: "G&A", c_f_roy: "Royalty (blended)",
+    c_t_cm_t: "Mining operating cost", c_t_cm_d: "UG polymetallic mines: $35–70/t typical. Includes drill, blast, load, haul from stope to surface.",
+    c_t_cp_t: "Milling cost", c_t_cp_d: "Polymetallic flotation circuit — sequential or bulk. Typical: $12–25/t.",
+    c_t_cg_t: "General & Admin", c_t_cg_d: "Typical: $2–5/t. Management, insurance, permits, community.",
+    c_t_roy_t: "Royalty / MET", c_t_roy_d: "Weighted average royalty across all payable metals. Applied to NSR as simplification. Typical 4–8% blended.",
+    c_result_label: "Break-even NSR cutoff", c_result_unit: "$/t ore",
+    c_br_nsr: "Aggregate NSR (at current grades)", c_br_cost: "Total operating cost", c_br_marg: "Operating margin @ current grade",
+    c_formula_title: "Calculation, shown in full",
+
+    // Methodology
+    m_eyebrow: "Reference · Methodology notes",
+    m_title: "Same ore body. Three answers. Here's why.",
+    m_desc: "Each method embeds a different view of the revenue chain and a different comfort with smelter-term complexity. None is universally correct — each is the right tool for a specific reporting context. Understanding why they disagree is the point.",
+    m1_h: "GKZ grade-based",
+    m1_p: "Revenue is a single net price per gram of metal (or Au-equivalent), stripped of royalty and refining. Costs are lumped per tonne of ore. Cutoff is grade at which revenue = cost. Silver and by-products enter via the Au-equivalent conversion factor.",
+    m1_use_b: "When to use:", m1_use: "When to use: resource reporting under GKZ/KZ/RK codes, feasibility work in CIS, internal cutoff decisions where smelter contracts are stable and simple.",
+    m1_out: "Output: grade (g/t or %)",
+    m2_h: "Single-metal concentrate",
+    m2_p: "Revenue is concentrate price × concentrate grade × payable, allowing for dilution and mining losses that reduce the grade that arrives at the mill. Logistics and G&A explicit. Only one metal.",
+    m2_use_b: "When to use:", m2_use: "When to use: monometallic deposits (Sn, W, Mo, some Cu) where concentrate is the saleable product, and smelter terms are baked into an agreed concentrate price.",
+    m2_out: "Output: grade (% or g/t)",
+    m3_h: "Net Smelter Return",
+    m3_p: "Each metal gets a full treatment: Price minus R/C, times Payable, times Recovery, summed across all payable metals → NSR per tonne of ore. Compared directly to total operating cost.",
+    m3_use_b: "When to use:", m3_use: "When to use: polymetallic deposits, Western reporting (NI 43-101, JORC, SAMREC), project finance, any context where by-product credits materially change economics.",
+    m3_out: "Output: $/t ore (or equivalent grade via NSR coefficient)",
+    m_comp_h: "Decision grid — which method fits your case",
+    m_comp_sub: "A practical chooser. In reality, most feasibility studies run two methods in parallel and reconcile.",
+    m_th_crit: "Criterion", m_th_a: "Case A · GKZ", m_th_b: "Case B · Concentrate", m_th_c: "Case C · NSR",
+    m_r1_c: "Number of payable metals", m_r1_a: "1 metal + equivalents", m_r1_b: "1 metal only", m_r1_cc: "Many (unlimited)",
+    m_r2_c: "Smelter-term visibility", m_r2_a: "Hidden in net price", m_r2_b: "Partially explicit", m_r2_cc: "Fully explicit",
+    m_r3_c: "Dilution / losses handling", m_r3_a: "External, applied later", m_r3_b: "Built into formula", m_r3_cc: "External (applied to grade)",
+    m_r4_c: "Output unit", m_r4_a: "g/t or %", m_r4_b: "g/t or %", m_r4_cc: "$/t ore, or NSR coefficient × grade",
+    m_r5_c: "Typical reporting context", m_r5_a: "GKZ, KZ-RK", m_r5_b: "Feasibility (monometallic)", m_r5_cc: "NI 43-101, JORC, SAMREC",
+    m_r6_c: "Sensitivity to metal mix changes", m_r6_a: "Low (via equivalent factor)", m_r6_b: "None", m_r6_cc: "High (first-order)",
+
+    foot_b: "All figures are illustrative.",
+    foot_body: "Project names, operators and deposit identifiers have been removed. Parameters are ordered to typical industry ranges but do not represent any specific asset, contract, or concentrate marketing agreement. Use for education and methodology discussion only — not for commercial decisions.",
+    foot_meta: "MineCalc · v1.0 · Apr 2026"
+  },
+  ru: {
+    brand: "MineCalc",
+    brand_sub: "Инструменты бортового содержания для горных инженеров",
+    hero_eyebrow: "Горная экономика · Справочный инструмент",
+    hero_title: "Три способа рассчитать <em>бортовое содержание</em> — на одних и тех же данных.",
+    hero_lede: "Интерактивный справочник, который показывает разницу между методом ГКЗ «по содержанию», монометальным методом «через концентрат» и полным NSR-подходом. У каждого поля есть подсказка. Каждая формула раскрыта.",
+    meta_author: "Автор",
+    meta_affil: "Аффилиация",
+    meta_affil_val: "Imperial College London · Responsible Mining and Metal Finance",
+    meta_version: "Версия",
+    meta_data: "Данные",
+    meta_data_val: "Анонимизированы · Иллюстративны",
+    tab_a: "Au–Ag · Метод ГКЗ",
+    tab_b: "Олово · Монометалл",
+    tab_c: "Полиметалл · NSR",
+    tab_m: "Методология",
+    preset_label: "Пресеты:",
+
+    // Case A
+    a_eyebrow: "Кейс A · Золото-серебряное жильное м-ние",
+    a_title: "Подход «по содержанию» — классика традиции ГКЗ.",
+    a_desc: "Бортовое содержание выражается в граммах на тонну руды как золотой эквивалент (GE). Серебро пересчитывается в золото через соотношение чистых цен и долей оплаты. Это то, что первым учат в СНГ — интуитивно и прозрачно, но скрыт слой переработки концентрата.",
+    a_preset1: "Подземка, типовой", a_preset2: "Карьер, богатый",
+    a_sec1: "Цены на металл и доли оплаты",
+    a_sec2: "НДПИ и аффинаж",
+    a_sec3: "Извлечение",
+    a_sec4: "Операционные затраты",
+    a_f_pau: "Цена золота", a_f_pag: "Цена серебра",
+    a_f_payau: "Доля оплаты Au", a_f_payag: "Доля оплаты Ag",
+    a_f_royau: "НДПИ на золото", a_f_royag: "НДПИ на серебро",
+    a_f_refau: "Стоимость аффинажа — Au",
+    a_f_recau: "Извлечение Au", a_f_recag: "Извлечение Ag",
+    a_f_cm: "Добыча руды", a_f_ch: "Перевозка до фабрики", a_f_cp: "Переработка", a_f_cg: "ОПР и прочее",
+    a_t_pau_t: "LBMA spot", a_t_pau_d: "Тройская унция (31,1035 г). Типовой диапазон 2020-х: $1 800–5 000/oz. Для консервативного планирования — 3-летняя скользящая средняя.",
+    a_t_pag_t: "LBMA spot", a_t_pag_d: "Gold-to-silver ratio обычно 60–90 в равновесии. Серебро волатильнее золота, закладывайте запас.",
+    a_t_payau_t: "Payable %", a_t_payau_d: "Доля золота в концентрате, которую платит смэлтер — после вычетов, потерь аффинажа и минимального вычета (обычно 1 г/т от содержания Au). Типично 0,90–0,97 для Au-концентратов.",
+    a_t_payag_t: "Payable %", a_t_payag_d: "Вычеты по серебру жёстче — типично 0,70–0,90, часто с минимальным вычетом 30 г/т.",
+    a_t_royau_t: "НДПИ / NSR royalty", a_t_royau_d: "Типично: 5–6% для золота в ряде юрисдикций СНГ. Применяется к выручке до операционных затрат.",
+    a_t_royag_t: "НДПИ серебра", a_t_royag_d: "Типично 5–7%. Часто фиксировано законом для попутных металлов.",
+    a_t_refau_t: "Стоимость аффинажа (R/C)", a_t_refau_d: "Затраты на грамм оплачиваемого золота за аффинаж у смэлтера. Типично: $0,15–0,40/г. Вычитается из валовой выручки.",
+    a_t_recau_t: "Металлургическое извлечение", a_t_recau_d: "Доля золота в руде, попадающая в товарный концентрат. Для Au-сульфидных руд: 85–92% типично. Для упорных руд: 60–80%.",
+    a_t_recag_t: "Извлечение серебра", a_t_recag_d: "Обычно ниже золота — 40–70% — т.к. серебро частично уходит в хвосты или в Pb/Zn-цикл.",
+    a_t_cm_t: "Добыча, опер. затраты", a_t_cm_d: "БВР, погрузка, транспорт от забоя до поверхности. Карьер: $2–8/т. Подземка: $25–80/т в зависимости от системы (КВ, ПО, ПЭО).",
+    a_t_ch_t: "Перевозка руды", a_t_ch_d: "Перевозка от портала/карьера до фабрики. Обычно $0,4–2/т в зависимости от расстояния.",
+    a_t_cp_t: "Переработка", a_t_cp_d: "Дробление, измельчение, флотация/CIL, реагенты, энергия. Типично: $10–30/т для обычной фабрики.",
+    a_t_cg_t: "ОПР", a_t_cg_d: "Общепроизводственные, управление, страхование, соц. сфера. Типично: $2–8/т. Иногда включается в переработку.",
+    a_result_label: "Бортовое содержание (БС)", a_result_unit: "г/т Au-экв",
+    a_sec_netau: "Чистая цена Au", a_sec_netag: "Чистая цена Ag", a_sec_tcost: "Общие затраты", a_sec_conv: "Ag→Au фактор",
+    a_formula_title: "Расчёт полностью",
+
+    // Case B
+    b_eyebrow: "Кейс B · Оловянное м-ние, ОГР + ПГР",
+    b_title: "Монометальный подход через цену концентрата.",
+    b_desc: "Бортовое содержание выражается в процентах олова в руде. Выручка начинается со стоимости концентрата — цена × содержание в концентрате × доля оплаты — за вычетом smelter-условий и логистики. Затраты разнесены по добыче, переработке, ОПР и транспорту. Стандартный подход российских консультантов для монометалльных м-ний.",
+    b_preset1: "Карьер", b_preset2: "Подземка",
+    b_sec1: "Концентрат и доля оплаты", b_sec2: "Извлечение и разубоживание", b_sec3: "Операционные затраты",
+    b_f_pconc: "Цена концентрата", b_f_cgrade: "Содержание в конц.", b_f_payable: "Доля оплаты",
+    b_f_rec: "Металлург. извлечение", b_f_dil: "Разубоживание", b_f_loss: "Потери",
+    b_f_cm: "Добыча руды", b_f_cw: "Вскрыша (на т руды)", b_f_cp: "Переработка", b_f_cg: "ОПР", b_f_ctl: "Логистика до порта",
+    b_t_pconc_t: "Цена концентрата", b_t_pconc_d: "На тонну товарного оловянного концентрата (содержание × цена металла × payable). Для концентрата 60% Sn при цене $50k/т Sn ≈ $30k/т конц. брутто.",
+    b_t_cgrade_t: "Содержание в концентрате", b_t_cgrade_d: "Типовая спецификация Sn-концентрата: 55–65% Sn по ГОСТ. Ниже — штрафы и больше затрат на обработку.",
+    b_t_payable_t: "Payable", b_t_payable_d: "Для олова: 90–95% типично. Вычеты покрывают потери аффинажа и маржу смэлтера.",
+    b_t_rec_t: "Извлечение Sn в концентрат", b_t_rec_d: "Олово известно плохим извлечением — гравитация + флотация: 50–70% типично. Тонкодисперсный касситерит теряется в шламы.",
+    b_t_dil_t: "Разубоживание", b_t_dil_d: "Доля пустой породы, попавшей в руду при добыче. ОГР: 0,05–0,15. ПГР: 0,10–0,25 в зависимости от системы. Снижает эффективное содержание.",
+    b_t_loss_t: "Потери руды", b_t_loss_d: "Доля руды, не извлечённая из массива (целики, остатки, границы). Обычно 0,03–0,10 для ОГР, 0,05–0,20 для ПГР.",
+    b_t_cm_t: "Добыча руды", b_t_cm_d: "Добыча руды карьером: $2–8/т. Подземка: $25–80/т. Включая БВР, погрузку, транспорт до ROM-склада.",
+    b_t_cw_t: "Стоимость вскрыши, аллокация", b_t_cw_d: "Только для карьера. = Коэф. вскрыши × стоимость тонны вскрыши. Для ПГР — ноль или только проходка.",
+    b_t_cp_t: "Переработка", b_t_cp_d: "Дробление, измельчение, гравитация + флотация для олова. Типично: $10–15/т.",
+    b_t_cg_t: "ОПР", b_t_cg_d: "Управление, вспомогательные службы, страхование. Обычно 10–20% от общих опер. затрат.",
+    b_t_ctl_t: "Логистика концентрата", b_t_ctl_d: "Автодорога/ЖД от фабрики до порта. Для отдалённых азиатских м-ний: $80–180/т концентрата.",
+    b_result_label: "Бортовое содержание (БС)", b_result_unit: "% Sn",
+    b_sec_netrev: "Фактор чистой выручки", b_sec_tcost: "Общие затраты", b_sec_pms: "Цена × Pay × Содержание", b_sec_dilf: "Фактор разубоживания",
+    b_formula_title: "Расчёт полностью",
+
+    // Case C
+    c_eyebrow: "Кейс C · Полиметалл VMS · Zn-Pb-Cu-Au-Ag",
+    c_title: "Подход Net Smelter Return — то, что требуют CIM, JORC и NI 43-101.",
+    c_desc: "Бортовое выражается в долларах на тонну руды, а не в содержании. Каждый металл даёт вклад в выручку через свой Payable × Recovery × (Цена − R/C), за вычетом T/C, транспорта и НДПИ. Сумма по металлам = NSR. При NSR = Total Cost находим break-even NSR, а эквивалентное БС по любому отдельному металлу получается из NSR-коэффициента.",
+    c_preset1: "Сульфидная руда", c_preset2: "Медная руда",
+    c_sec1: "Металлы — цены, содержания, извлечения, payable",
+    c_sec2: "Smelter-условия и логистика",
+    c_sec3: "Операционные затраты и НДПИ",
+    c_col_metal: "Металл", c_col_price: "Цена", c_col_unit: "Ед.", c_col_grade: "Сод.", c_col_rec: "Извл. %", c_col_pay: "Payable",
+    c_hint1: "Содержание в % для базовых металлов, г/т для Au и Ag. Каждая строка — один металл, дающий вклад в совокупный NSR.",
+    c_f_tc: "Treatment Charge (T/C)", c_f_transp: "Транспорт концентрата", c_f_concratio: "Выход концентрата",
+    c_t_tc_t: "Treatment Charge смэлтера", c_t_tc_d: "Платит рудник смэлтеру на тонну доставленного концентрата. Типично: $150–300/т. Волатильно в зависимости от баланса мощностей смэлтеров в мире.",
+    c_t_transp_t: "Транспорт концентрата", c_t_transp_d: "От фабрики до смэлтера или экспортного порта. $30–200/т в зависимости от логистической цепочки и расстояния.",
+    c_t_concratio_t: "Mass pull по концентрату", c_t_concratio_d: "Тонн совокупного концентрата на тонну руды. Типично для VMS со смешанной флотацией: 0,08–0,15. Нужно для пересчёта $/т концентрата в $/т руды.",
+    c_f_cm: "Добыча руды", c_f_cp: "Переработка", c_f_cg: "ОПР", c_f_roy: "НДПИ (сводный)",
+    c_t_cm_t: "Добыча, опер. затраты", c_t_cm_d: "Подземные полиметалльные рудники: $35–70/т типично. Включая БВР, погрузку, транспорт.",
+    c_t_cp_t: "Переработка", c_t_cp_d: "Полиметалл. флотация — последовательная или коллективная. Типично: $12–25/т.",
+    c_t_cg_t: "ОПР", c_t_cg_d: "Типично: $2–5/т. Управление, страхование, разрешения, соц. сфера.",
+    c_t_roy_t: "НДПИ / роялти", c_t_roy_d: "Взвешенное среднее НДПИ по всем оплачиваемым металлам. Применяется к NSR как упрощение. Типично 4–8% сводный.",
+    c_result_label: "Break-even NSR cutoff", c_result_unit: "$/т руды",
+    c_br_nsr: "Совокупный NSR (при текущих содержаниях)", c_br_cost: "Общие опер. затраты", c_br_marg: "Опер. маржа при текущем содержании",
+    c_formula_title: "Расчёт полностью",
+
+    // Methodology
+    m_eyebrow: "Справка · Методологические заметки",
+    m_title: "Одно рудное тело. Три ответа. Вот почему.",
+    m_desc: "Каждый метод закладывает свой взгляд на цепочку выручки и свою терпимость к сложности smelter-условий. Ни один не универсален — каждый правильный инструмент под свой контекст отчётности. Понять, почему они дают разные ответы — и есть цель.",
+    m1_h: "ГКЗ по содержанию",
+    m1_p: "Выручка — единая чистая цена на грамм металла (или Au-эквивалент), очищенная от НДПИ и аффинажа. Затраты сгруппированы на тонну руды. БС — содержание, при котором выручка = затраты. Серебро и попутчики входят через коэф. Au-эквивалентности.",
+    m1_use_b: "Когда использовать:", m1_use: "Когда использовать: отчётность по ГКЗ/KZ/RK кодексам, ТЭО в СНГ, внутренние решения по БС при стабильных и простых контрактах со смэлтером.",
+    m1_out: "Выход: содержание (г/т или %)",
+    m2_h: "Монометалл через концентрат",
+    m2_p: "Выручка = цена конц. × сод. в конц. × payable, с учётом разубоживания и потерь, снижающих содержание, попадающее на фабрику. Логистика и ОПР явные. Только один металл.",
+    m2_use_b: "Когда использовать:", m2_use: "Когда использовать: монометалльные м-ния (Sn, W, Mo, некоторые Cu), где концентрат — товарный продукт, и условия смэлтера вшиты в согласованную цену.",
+    m2_out: "Выход: содержание (% или г/т)",
+    m3_h: "Net Smelter Return",
+    m3_p: "Каждый металл обрабатывается полностью: Цена минус R/C, умножить на Payable, на Recovery, сложить по всем оплачиваемым металлам → NSR на тонну руды. Сравнивается напрямую с общими опер. затратами.",
+    m3_use_b: "Когда использовать:", m3_use: "Когда использовать: полиметалльные м-ния, западная отчётность (NI 43-101, JORC, SAMREC), проектное финансирование, любой контекст где попутные металлы материально меняют экономику.",
+    m3_out: "Выход: $/т руды (или эквивалентное содержание через NSR-коэффициент)",
+    m_comp_h: "Сетка решений — какой метод подходит вашему случаю",
+    m_comp_sub: "Практический выбор. В реальности большинство ТЭО считают двумя методами параллельно и сверяют.",
+    m_th_crit: "Критерий", m_th_a: "Кейс A · ГКЗ", m_th_b: "Кейс B · Концентрат", m_th_c: "Кейс C · NSR",
+    m_r1_c: "Количество оплач. металлов", m_r1_a: "1 металл + эквиваленты", m_r1_b: "Только 1 металл", m_r1_cc: "Много (не ограничено)",
+    m_r2_c: "Видимость smelter-условий", m_r2_a: "Скрыто в чистой цене", m_r2_b: "Частично явно", m_r2_cc: "Полностью явно",
+    m_r3_c: "Обработка разубож./потерь", m_r3_a: "Внешняя, поздняя", m_r3_b: "Встроена в формулу", m_r3_cc: "Внешняя (к содержанию)",
+    m_r4_c: "Единица результата", m_r4_a: "г/т или %", m_r4_b: "г/т или %", m_r4_cc: "$/т руды, или NSR-коэф. × сод.",
+    m_r5_c: "Типовой контекст отчётности", m_r5_a: "ГКЗ, KZ-RK", m_r5_b: "ТЭО (монометалл)", m_r5_cc: "NI 43-101, JORC, SAMREC",
+    m_r6_c: "Чувствит. к смене metal mix", m_r6_a: "Низкая (через коэф. экв.)", m_r6_b: "Отсутствует", m_r6_cc: "Высокая (первого порядка)",
+
+    foot_b: "Все цифры иллюстративны.",
+    foot_body: "Названия проектов, операторов и идентификаторы месторождений удалены. Параметры приведены к типовым отраслевым диапазонам и не представляют конкретный актив, контракт или соглашение о реализации концентрата. Использовать только для образования и обсуждения методологии — не для коммерческих решений.",
+    foot_meta: "MineCalc · v1.0 · Apr 2026"
+  }
+};
+
+let currentLang = 'en';
+function applyLang(lang) {
+  currentLang = lang;
+  document.documentElement.setAttribute('lang', lang);
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const val = I18N[lang][key];
+    if (val !== undefined) {
+      if (/<[a-z]/i.test(val)) el.innerHTML = val;
+      else el.textContent = val;
+    }
+  });
+  // Re-render Case C metals (labels depend on lang)
+  renderCRows();
+  // Recompute everything (formulas change in language)
+  computeA(); computeB(); computeC();
+}
+
+document.querySelectorAll('.lang-toggle button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.lang-toggle button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyLang(btn.dataset.lang);
+    if (typeof gtag === 'function') gtag('event', 'switch_language', { language: btn.dataset.lang });
+  });
+});
+
+// ============ TABS ============
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    if (typeof gtag === 'function') gtag('event', 'switch_tab', { tab_name: btn.dataset.tab });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+// ============ HELPERS ============
+const fmt = (n, d = 2) => {
+  if (!isFinite(n) || isNaN(n)) return '—';
+  return n.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
+};
+const g = id => parseFloat(document.getElementById(id).value) || 0;
+const OZ_TO_G = 31.1034768;
+
+// ============ CASE A: GKZ Au-eq ============
+function computeA() {
+  const pau = g('a_pau'), pag = g('a_pag');
+  const payau = g('a_payau'), payag = g('a_payag');
+  const royau = g('a_royau') / 100, royag = g('a_royag') / 100;
+  const refau = g('a_refau');
+  const recau = g('a_recau') / 100, recag = g('a_recag') / 100;
+  const cm = g('a_cm'), ch = g('a_ch'), cp = g('a_cp'), cg = g('a_cg');
+
+  // Net price per gram of Au (after royalty and refining)
+  const pauG = pau / OZ_TO_G;
+  const pagG = pag / OZ_TO_G;
+  const netAu = pauG * (1 - royau) - refau;
+  const netAg = pagG * (1 - royag);
+
+  // Ag-to-Au equivalent factor (divisor form): 1 g Ag = 1/k g Au
+  // k = (netAu * payau) / (netAg * payag)
+  const k = (netAu * payau) / (netAg * payag);
+
+  // Total cost per tonne
+  const tCost = cm + ch + cp + cg;
+
+  // Cutoff grade (g/t Au-eq) = cost / (net_Au * pay_Au * rec_Au)
+  // Silver contributes via GE; user enters Au-eq, but we compute BC in Au-eq
+  const denom = netAu * payau * recau;
+  const bc = tCost / denom;
+
+  document.getElementById('a_result').textContent = fmt(bc, 2);
+  document.getElementById('a_netau').textContent = fmt(netAu, 3);
+  document.getElementById('a_netag').textContent = fmt(netAg, 4);
+  document.getElementById('a_tcost').textContent = fmt(tCost, 2);
+  document.getElementById('a_k').textContent = fmt(k, 1);
+
+  const L = I18N[currentLang];
+  const lbl = {
+    en: { p: "Net price Au", c: "Cost total", den: "Net price Au × Payable Au × Recovery Au", bc: "Cutoff grade (Au-eq)" },
+    ru: { p: "Чистая цена Au", c: "Σ затраты", den: "Чистая цена Au × Payable Au × Извлечение Au", bc: "БС (Au-эквивалент)" }
+  }[currentLang];
+
+  const formula = `<span class="acc">${lbl.p}:</span>
+  = (${fmt(pau,0)} / 31.1035) × (1 − ${fmt(g('a_royau'),1)}%) − ${fmt(refau,2)}
+  = ${fmt(pauG,3)} × ${fmt(1-royau,3)} − ${fmt(refau,2)}
+  = <span class="num-val">${fmt(netAu,3)}</span> $/g
+
+<span class="acc">${lbl.c}:</span>
+  = ${fmt(cm,1)} + ${fmt(ch,1)} + ${fmt(cp,1)} + ${fmt(cg,1)}
+  = <span class="num-val">${fmt(tCost,2)}</span> $/t
+
+<div class="formula-divider"></div><span class="acc">${lbl.bc}:</span>
+  = ${lbl.c} / (${lbl.den})
+  = ${fmt(tCost,2)} / (${fmt(netAu,3)} × ${fmt(payau,2)} × ${fmt(recau*100,0)}%)
+  = ${fmt(tCost,2)} / <span class="var">${fmt(denom,3)}</span>
+  = <span class="acc">${fmt(bc,2)} g/t Au-eq</span>`;
+  document.getElementById('a_formula').innerHTML = formula;
+}
+
+// ============ CASE B: Single-metal concentrate ============
+function computeB() {
+  const pconc = g('b_pconc'), cgrade = g('b_cgrade') / 100, pay = g('b_payable');
+  const rec = g('b_rec') / 100, dil = g('b_dil'), loss = g('b_loss');
+  const cm = g('b_cm'), cw = g('b_cw'), cp = g('b_cp'), cg = g('b_cg'), ctl = g('b_ctl');
+
+  // Total cost per tonne of ore
+  const tCost = cm + cw + cp + cg;
+
+  // Effective price-per-tonne-of-metal (concentrate price / concentrate grade)
+  // Actually: per % of Sn in ore — revenue side:
+  // Revenue per t ore per % Sn = (pconc / cgrade%) × cgrade × payable × recovery × (1-dil) × (1-loss)
+  // Simplify: per 1% Sn in ore:
+  //   = pconc/cgrade × cgrade × pay × rec × (1-dil)*(1-loss) ... wait let me rederive
+  //
+  // Gross price per tonne of Sn metal = pconc / cgrade
+  // So revenue per t ore per % Sn contained = (pconc/cgrade) × 0.01 (convert % to fraction) × pay × rec × dilution-factor × loss-factor
+  //   minus logistics which depends on concentrate tonnage
+  //
+  // Logistics per t ore = (conc produced per t ore) × ctl
+  //   conc produced per t ore = (grade_ore × rec) / cgrade  [at cutoff grade]
+  //   so logistics at cutoff per t ore = (BC × rec / cgrade) × ctl
+  //
+  // Revenue per t ore at grade BC:
+  //   Rev = BC × 0.01 × (pconc/cgrade) × pay × rec × (1-dil) × (1-loss)
+  //       = BC × (pconc × pay × rec × (1-dil) × (1-loss)) / (cgrade × 100)
+  // Wait - grade in ore is % too. Let's be careful.
+  //
+  // Let BC = grade of Sn in ore as fraction (e.g. 0.008 for 0.8%)
+  // Tonnes of Sn in 1 tonne of ore = BC × (1-dil) × (1-loss) × rec (effective metal to concentrate, as fraction)
+  // This is also = (conc produced) × cgrade   where conc produced is as fraction of ore
+  // So conc produced per t ore = (BC × (1-dil)*(1-loss) × rec) / cgrade
+  // Gross conc revenue per t ore = conc produced × pconc × pay
+  //   = BC × (1-dil)*(1-loss) × rec × pconc × pay / cgrade
+  // Logistics per t ore = conc produced × ctl = BC × (1-dil)*(1-loss) × rec × ctl / cgrade
+  //
+  // Net revenue per t ore = BC × (1-dil)*(1-loss) × rec × (pconc × pay − ctl) / cgrade
+  //
+  // Set net rev = total cost:
+  // BC = tCost × cgrade / [(1-dil)*(1-loss) × rec × (pconc × pay − ctl)]
+
+  const dilF = (1 - dil) * (1 - loss);
+  const netRevFactor = (pconc * pay - ctl); // $/t conc
+  const denom = dilF * rec * netRevFactor;  // $/t ore per unit grade fraction
+  const bcFrac = tCost * cgrade / denom;    // grade as fraction
+  const bcPct = bcFrac * 100;               // grade as %
+
+  document.getElementById('b_result').textContent = fmt(bcPct, 3);
+  document.getElementById('b_netrev').textContent = fmt(netRevFactor, 0);
+  document.getElementById('b_tcost').textContent = fmt(tCost, 2);
+  document.getElementById('b_pms').textContent = fmt(pconc * pay, 0);
+  document.getElementById('b_dilf').textContent = fmt(dilF, 3);
+
+  const lbl = {
+    en: { c: "Cost total", nr: "Net revenue per t concentrate", df: "Dilution × (1-Loss)", bc: "Cutoff grade Sn" },
+    ru: { c: "Σ затраты", nr: "Чистая выручка на т концентрата", df: "(1−Разуб.)×(1−Потери)", bc: "БС Sn" }
+  }[currentLang];
+
+  const formula = `<span class="acc">${lbl.c}:</span>
+  = ${fmt(cm,1)} + ${fmt(cw,2)} + ${fmt(cp,1)} + ${fmt(cg,1)}
+  = <span class="num-val">${fmt(tCost,2)}</span> $/t ore
+
+<span class="acc">${lbl.nr}:</span>
+  = ${fmt(pconc,0)} × ${fmt(pay,2)} − ${fmt(ctl,0)}
+  = <span class="num-val">${fmt(netRevFactor,0)}</span> $/t conc
+
+<span class="acc">${lbl.df}:</span>
+  = (1 − ${fmt(dil,2)}) × (1 − ${fmt(loss,2)})
+  = <span class="num-val">${fmt(dilF,3)}</span>
+
+<div class="formula-divider"></div><span class="acc">${lbl.bc}:</span>
+  = ${lbl.c} × Conc.grade / [${lbl.df} × Rec × ${lbl.nr}]
+  = ${fmt(tCost,2)} × ${fmt(g('b_cgrade'),0)}% / [${fmt(dilF,3)} × ${fmt(rec*100,0)}% × ${fmt(netRevFactor,0)}]
+  = <span class="acc">${fmt(bcPct,3)} % Sn</span>`;
+  document.getElementById('b_formula').innerHTML = formula;
+}
+
+// ============ CASE C: NSR Polymetallic ============
+const METALS = [
+  { id: 'zn', name: 'Zn', unitGrade: '%',   unitPrice: '$/t',  decimalsGrade: 2, factor: 10 },   // 1% × 10 = kg/t
+  { id: 'pb', name: 'Pb', unitGrade: '%',   unitPrice: '$/t',  decimalsGrade: 2, factor: 10 },
+  { id: 'cu', name: 'Cu', unitGrade: '%',   unitPrice: '$/t',  decimalsGrade: 2, factor: 10 },
+  { id: 'au', name: 'Au', unitGrade: 'g/t', unitPrice: '$/oz', decimalsGrade: 2, factor: 1/OZ_TO_G },
+  { id: 'ag', name: 'Ag', unitGrade: 'g/t', unitPrice: '$/oz', decimalsGrade: 2, factor: 1/OZ_TO_G },
+];
+
+const C_PRESETS = {
+  c1: { // Sulphide ore — fully generic, not tied to any specific asset
+    tc: 250, transp: 95, concratio: 0.10, cm: 48, cp: 15.0, cg: 2.5, roy: 6,
+    metals: {
+      zn: { price: 3100, grade: 0.80, rec: 82, pay: 0.85 },
+      pb: { price: 2000, grade: 0.30, rec: 76, pay: 0.95 },
+      cu: { price: 10500, grade: 0.40, rec: 80, pay: 0.96 },
+      au: { price: 4500, grade: 2.20, rec: 72, pay: 0.92 },
+      ag: { price: 70,   grade: 9.50, rec: 70, pay: 0.80 }
+    }
+  },
+  c2: { // Cu-rich ore — generic Cu-dominant profile
+    tc: 260, transp: 95, concratio: 0.13, cm: 34, cp: 13.5, cg: 2.0, roy: 6,
+    metals: {
+      zn: { price: 3100, grade: 0.15, rec: 22, pay: 0.85 },
+      pb: { price: 2000, grade: 0.10, rec: 16, pay: 0.95 },
+      cu: { price: 10500, grade: 1.50, rec: 95, pay: 0.96 },
+      au: { price: 4500, grade: 0.50, rec: 58, pay: 0.92 },
+      ag: { price: 70,   grade: 7.00, rec: 78, pay: 0.80 }
+    }
+  }
+};
+
+// Initialize metal state from preset c1
+let C_STATE = JSON.parse(JSON.stringify(C_PRESETS.c1));
+
+function renderCRows() {
+  const tbody = document.getElementById('c_metal_rows');
+  tbody.innerHTML = '';
+  METALS.forEach(m => {
+    const s = C_STATE.metals[m.id];
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${m.name}</td>
+      <td style="text-align:right"><input type="number" class="mini-input" data-metal="${m.id}" data-field="price" value="${s.price}" step="10"></td>
+      <td style="text-align:right; font-family: var(--mono); font-size: 10px; color: var(--ink-muted);">${m.unitPrice}</td>
+      <td style="text-align:right"><input type="number" class="mini-input" data-metal="${m.id}" data-field="grade" value="${s.grade}" step="0.01"></td>
+      <td style="text-align:right"><input type="number" class="mini-input" data-metal="${m.id}" data-field="rec" value="${s.rec}" step="1"></td>
+      <td style="text-align:right"><input type="number" class="mini-input" data-metal="${m.id}" data-field="pay" value="${s.pay}" step="0.01"></td>
+    `;
+    tbody.appendChild(row);
+  });
+  // Bind inputs
+  tbody.querySelectorAll('.mini-input').forEach(inp => {
+    inp.addEventListener('input', e => {
+      const metal = e.target.dataset.metal;
+      const field = e.target.dataset.field;
+      const v = parseFloat(e.target.value) || 0;
+      C_STATE.metals[metal][field] = v;
+      computeC();
+    });
+  });
+}
+
+function computeC() {
+  const tc = g('c_tc'), transp = g('c_transp'), concratio = g('c_concratio');
+  const cm = g('c_cm'), cp = g('c_cp'), cg = g('c_cg'), roy = g('c_roy') / 100;
+
+  // NSR per metal = grade_per_t_ore (in tonnes) × recovery × payable × price_per_tonne_metal
+  // For base metals: grade 1% = 10 kg/t = 0.01 t/t
+  // For Au/Ag: grade in g/t, price in $/oz → convert to $/g = price / 31.1035
+
+  let totalNSRbeforeFees = 0;
+  METALS.forEach(m => {
+    const s = C_STATE.metals[m.id];
+    let metalTPerT, pricePerT;
+    if (m.id === 'au' || m.id === 'ag') {
+      metalTPerT = s.grade / 1e6; // g/t → t/t
+      pricePerT = (s.price / OZ_TO_G) * 1e6; // $/oz → $/g → $/t
+    } else {
+      metalTPerT = s.grade / 100; // % → fraction
+      pricePerT = s.price; // $/t
+    }
+    const nsrM = metalTPerT * (s.rec / 100) * s.pay * pricePerT;
+    s._nsr = nsrM;
+    totalNSRbeforeFees += nsrM;
+  });
+
+  // Smelter fees: T/C and transport, scaled by concentrate yield
+  const feesPerTore = (tc + transp) * concratio;
+  // Royalty on NSR (simplified)
+  const royCost = totalNSRbeforeFees * roy;
+
+  const netNSR = totalNSRbeforeFees - feesPerTore - royCost;
+  const tCost = cm + cp + cg;
+  const margin = netNSR - tCost;
+
+  document.getElementById('c_result').textContent = fmt(tCost, 2);
+  document.getElementById('c_nsr').textContent = fmt(netNSR, 2);
+  document.getElementById('c_tcost').textContent = fmt(tCost, 2);
+  document.getElementById('c_margin').textContent = fmt(margin, 2);
+
+  const lbl = {
+    en: {
+      nsrM: "NSR contribution by metal",
+      fees: "Smelter fees per t ore",
+      royL: "Royalty on NSR",
+      netN: "Net NSR per t ore",
+      cost: "Total operating cost",
+      cutoff: "Break-even NSR cutoff (= Total Cost)",
+      margin: "Margin at current grades"
+    },
+    ru: {
+      nsrM: "Вклад NSR по металлам",
+      fees: "Smelter-сборы на т руды",
+      royL: "НДПИ с NSR",
+      netN: "Чистый NSR на т руды",
+      cost: "Общие операционные затраты",
+      cutoff: "Break-even NSR cutoff (= общие затраты)",
+      margin: "Маржа при текущих содержаниях"
+    }
+  }[currentLang];
+
+  let metalLines = METALS.map(m => {
+    const s = C_STATE.metals[m.id];
+    const nsrStr = fmt(s._nsr, 2);
+    return `  ${m.name.padEnd(2,' ')}: <span class="var">${fmt(s.grade, 2).padStart(6,' ')} ${m.unitGrade}</span> × ${fmt(s.rec,0).padStart(3,' ')}% × ${fmt(s.pay,2)} × price → <span class="num-val">$${nsrStr}</span>`;
+  }).join('\n');
+
+  const formula = `<span class="acc">${lbl.nsrM}:</span>
+${metalLines}
+  <span style="opacity:.5">───────────────</span>
+  Σ = <span class="num-val">$${fmt(totalNSRbeforeFees, 2)}</span> /t ore
+
+<span class="acc">${lbl.fees}:</span>
+  = (T/C ${fmt(tc,0)} + Transp ${fmt(transp,0)}) × Yield ${fmt(concratio,2)}
+  = <span class="num-val">$${fmt(feesPerTore,2)}</span>/t ore
+
+<span class="acc">${lbl.royL}:</span>
+  = $${fmt(totalNSRbeforeFees,2)} × ${fmt(g('c_roy'),1)}%
+  = <span class="num-val">$${fmt(royCost,2)}</span>/t ore
+
+<span class="acc">${lbl.netN}:</span>
+  = ${fmt(totalNSRbeforeFees,2)} − ${fmt(feesPerTore,2)} − ${fmt(royCost,2)}
+  = <span class="num-val">$${fmt(netNSR,2)}</span>/t ore
+
+<div class="formula-divider"></div><span class="acc">${lbl.cutoff}:</span>
+  = ${fmt(cm,1)} + ${fmt(cp,2)} + ${fmt(cg,2)}
+  = <span class="acc">$${fmt(tCost,2)}/t ore</span>
+
+<span class="acc">${lbl.margin}:</span> <span class="${margin>=0?'var':''}" style="color:${margin>=0?'#8fb080':'#d4946a'}">$${fmt(margin, 2)}/t</span>`;
+  document.getElementById('c_formula').innerHTML = formula;
+}
+
+// ============ PRESETS ============
+const A_PRESETS = {
+  a1: { a_pau: 4500, a_pag: 70, a_payau: 0.95, a_payag: 0.85, a_royau: 6, a_royag: 6.5, a_refau: 0.25, a_recau: 86, a_recag: 47, a_cm: 43.5, a_ch: 0, a_cp: 14.6, a_cg: 0 },
+  a2: { a_pau: 4500, a_pag: 70, a_payau: 0.97, a_payag: 0.88, a_royau: 6, a_royag: 6.5, a_refau: 0.20, a_recau: 92, a_recag: 55, a_cm: 4.5, a_ch: 1.0, a_cp: 14.6, a_cg: 3.5 }
+};
+const B_PRESETS = {
+  b1: { b_pconc: 30000, b_cgrade: 60, b_payable: 0.95, b_rec: 55, b_dil: 0.2, b_loss: 0.07, b_cm: 19.6, b_cw: 2.37, b_cp: 11.67, b_cg: 12.23, b_ctl: 123 },
+  b2: { b_pconc: 30000, b_cgrade: 60, b_payable: 0.95, b_rec: 55, b_dil: 0.18, b_loss: 0.07, b_cm: 53.6, b_cw: 0, b_cp: 11.67, b_cg: 12.23, b_ctl: 123 }
+};
+
+document.querySelectorAll('.preset-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const p = btn.dataset.preset;
+    if (typeof gtag === 'function') gtag('event', 'select_preset', { preset_id: p, preset_label: btn.textContent.trim() });
+    if (p.startsWith('a')) {
+      Object.entries(A_PRESETS[p]).forEach(([k, v]) => document.getElementById(k).value = v);
+      computeA();
+    } else if (p.startsWith('b')) {
+      Object.entries(B_PRESETS[p]).forEach(([k, v]) => document.getElementById(k).value = v);
+      computeB();
+    } else if (p.startsWith('c')) {
+      const preset = C_PRESETS[p];
+      document.getElementById('c_tc').value = preset.tc;
+      document.getElementById('c_transp').value = preset.transp;
+      document.getElementById('c_concratio').value = preset.concratio;
+      document.getElementById('c_cm').value = preset.cm;
+      document.getElementById('c_cp').value = preset.cp;
+      document.getElementById('c_cg').value = preset.cg;
+      document.getElementById('c_roy').value = preset.roy;
+      C_STATE = JSON.parse(JSON.stringify(preset));
+      renderCRows();
+      computeC();
+    }
+  });
+});
+
+// ============ BIND ALL INPUTS ============
+document.querySelectorAll('#caseA input').forEach(i => i.addEventListener('input', computeA));
+document.querySelectorAll('#caseB input').forEach(i => i.addEventListener('input', computeB));
+document.querySelectorAll('#caseC input[id^="c_"]').forEach(i => i.addEventListener('input', computeC));
+
+// ============ REGISTRATION GATE ============
+const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyRisAPkaJuK4o0z6TQyhTwNZnnvmsD7D71MhaaRxf-CU9k2saUgw0VQb54k2sSE9L2hA/exec'; // Replace with your Apps Script Web App URL
+
+function showRegModal() {
+  const overlay = document.getElementById('regOverlay');
+  overlay.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  updateRegLang();
+}
+
+function hideRegModal() {
+  document.getElementById('regOverlay').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function updateRegLang() {
+  const isRu = currentLang === 'ru';
+  document.querySelector('#regOverlay div > div:first-child').textContent = isRu ? '\u0414\u043e\u0431\u0440\u043e \u043f\u043e\u0436\u0430\u043b\u043e\u0432\u0430\u0442\u044c \u0432 MineCalc' : 'Welcome to MineCalc';
+  document.getElementById('regSubtitle').textContent = isRu
+    ? '\u0417\u0430\u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0438\u0440\u0443\u0439\u0442\u0435\u0441\u044c \u043e\u0434\u0438\u043d \u0440\u0430\u0437 \u0434\u043b\u044f \u0434\u043e\u0441\u0442\u0443\u043f\u0430 \u043a\u043e \u0432\u0441\u0435\u043c \u0442\u0440\u0451\u043c \u043a\u0430\u043b\u044c\u043a\u0443\u043b\u044f\u0442\u043e\u0440\u0430\u043c. \u0411\u0435\u0441\u043f\u043b\u0430\u0442\u043d\u043e \u043d\u0430\u0432\u0441\u0435\u0433\u0434\u0430.'
+    : 'Register once to access all three cutoff grade calculators. Free forever.';
+  document.getElementById('regLabelName').textContent = isRu ? '\u0418\u043c\u044f \u0438 \u0444\u0430\u043c\u0438\u043b\u0438\u044f' : 'Full Name';
+  document.getElementById('regLabelEmail').textContent = isRu ? '\u0420\u0430\u0431\u043e\u0447\u0438\u0439 email' : 'Work Email';
+  document.getElementById('regLabelCompany').textContent = isRu ? '\u041a\u043e\u043c\u043f\u0430\u043d\u0438\u044f / \u0423\u043d\u0438\u0432\u0435\u0440\u0441\u0438\u0442\u0435\u0442' : 'Company / University';
+  document.getElementById('regSubmitBtn').textContent = isRu ? '\u041f\u043e\u043b\u0443\u0447\u0438\u0442\u044c \u0434\u043e\u0441\u0442\u0443\u043f' : 'Get Access';
+  document.getElementById('regDisclaimer').textContent = isRu
+    ? '\u0412\u0430\u0448\u0438 \u0434\u0430\u043d\u043d\u044b\u0435 \u0445\u0440\u0430\u043d\u044f\u0442\u0441\u044f \u0431\u0435\u0437\u043e\u043f\u0430\u0441\u043d\u043e \u0438 \u043d\u0438\u043a\u043e\u0433\u0434\u0430 \u043d\u0435 \u043f\u0435\u0440\u0435\u0434\u0430\u044e\u0442\u0441\u044f \u0442\u0440\u0435\u0442\u044c\u0438\u043c \u043b\u0438\u0446\u0430\u043c.'
+    : 'Your data is stored securely and never shared with third parties.';
+}
+
+// Check if user already registered
+if (!localStorage.getItem('minecalc_registered')) {
+  showRegModal();
+}
+
+document.getElementById('regForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('regSubmitBtn');
+  const origText = btn.textContent;
+  btn.textContent = '...';
+  btn.disabled = true;
+
+  const data = {
+    name: document.getElementById('regName').value.trim(),
+    email: document.getElementById('regEmail').value.trim(),
+    company: document.getElementById('regCompany').value.trim(),
+    timestamp: new Date().toISOString(),
+    language: currentLang
+  };
+
+  // Send to Google Sheets (fire-and-forget, don't block access if it fails)
+  try {
+    if (GOOGLE_SHEETS_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL') {
+      await fetch(GOOGLE_SHEETS_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+    }
+  } catch (err) {
+    console.warn('Registration data could not be sent:', err);
+  }
+
+  // Track in GA4
+  if (typeof gtag === 'function') {
+    gtag('event', 'sign_up', {
+      method: 'registration_form',
+      user_company: data.company
+    });
+  }
+
+  localStorage.setItem('minecalc_registered', JSON.stringify(data));
+  hideRegModal();
+});
+
+// ============ GA4 CUSTOM EVENTS ============
+let _gaCalcTimer = null;
+function trackCalculation(method) {
+  clearTimeout(_gaCalcTimer);
+  _gaCalcTimer = setTimeout(() => {
+    if (typeof gtag === 'function') gtag('event', 'run_calculation', { method: method });
+  }, 1500); // debounce: fire after 1.5s of inactivity
+}
+const _origComputeA = computeA;
+computeA = function() { _origComputeA(); trackCalculation('A_GKZ'); };
+const _origComputeB = computeB;
+computeB = function() { _origComputeB(); trackCalculation('B_Concentrate'); };
+const _origComputeC = computeC;
+computeC = function() { _origComputeC(); trackCalculation('C_NSR'); };
+
+// ============ INITIALIZE ============
+renderCRows();
+_origComputeA();
+_origComputeB();
+_origComputeC();
+applyLang('en');
+
+</script>
+</body>
+</html>
