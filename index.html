@@ -1523,6 +1523,43 @@
   </div>
 </footer>
 
+<!-- ============ FEEDBACK BUTTON + MODAL ============ -->
+<button id="fbBtn" onclick="document.getElementById('fbOverlay').style.display='flex'; document.body.style.overflow='hidden'; updateFbLang();" style="position:fixed; bottom:24px; right:24px; z-index:9000; background:var(--ink); color:#fff; border:none; border-radius:24px; padding:10px 20px; font-size:13px; font-weight:600; font-family:var(--sans); cursor:pointer; box-shadow:0 4px 16px rgba(0,0,0,0.18); transition:transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 6px 24px rgba(0,0,0,0.25)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 16px rgba(0,0,0,0.18)'"><span id="fbBtnText">Feedback</span></button>
+
+<div id="fbOverlay" style="display:none; position:fixed; inset:0; z-index:9998; background:rgba(26,24,20,0.45); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center;">
+  <div style="background:#fff; border-radius:16px; padding:36px 32px 28px; max-width:440px; width:90%; box-shadow:0 24px 80px rgba(0,0,0,0.18); font-family:var(--sans); position:relative;">
+    <button onclick="document.getElementById('fbOverlay').style.display='none'; document.body.style.overflow='';" style="position:absolute; top:14px; right:16px; background:none; border:none; font-size:20px; cursor:pointer; color:var(--ink-muted); line-height:1;">&times;</button>
+    <div id="fbFormContent">
+      <div style="font-family:var(--serif); font-size:20px; font-weight:600; margin-bottom:4px; font-variation-settings:'opsz' 40;" id="fbTitle">Got thoughts?</div>
+      <p id="fbSubtitle" style="color:var(--ink-muted); font-size:13px; margin-bottom:20px; line-height:1.5;">Tell us what's missing, broken, or brilliant.</p>
+      <form id="fbForm">
+        <label style="display:block; margin-bottom:12px;">
+          <span style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); display:block; margin-bottom:5px;" id="fbLabelName">Your name (optional)</span>
+          <input id="fbName" type="text" placeholder="" style="width:100%; padding:9px 12px; border:1.5px solid var(--rule); border-radius:8px; font-size:14px; font-family:inherit; outline:none; transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rule)'">
+        </label>
+        <label style="display:block; margin-bottom:12px;">
+          <span style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); display:block; margin-bottom:5px;" id="fbLabelType">What's this about?</span>
+          <select id="fbType" style="width:100%; padding:9px 12px; border:1.5px solid var(--rule); border-radius:8px; font-size:14px; font-family:inherit; outline:none; background:#fff; cursor:pointer;">
+            <option value="bug" id="fbOptBug">Bug</option>
+            <option value="feature" id="fbOptFeature">Feature request</option>
+            <option value="general" selected id="fbOptGeneral">General feedback</option>
+          </select>
+        </label>
+        <label style="display:block; margin-bottom:18px;">
+          <span style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); display:block; margin-bottom:5px;" id="fbLabelMsg">Your message</span>
+          <textarea id="fbMsg" required rows="4" style="width:100%; padding:9px 12px; border:1.5px solid var(--rule); border-radius:8px; font-size:14px; font-family:inherit; outline:none; resize:vertical; transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rule)'"></textarea>
+        </label>
+        <button id="fbSubmitBtn" type="submit" style="width:100%; padding:11px; background:var(--accent); color:#fff; border:none; border-radius:8px; font-size:14px; font-weight:600; font-family:inherit; cursor:pointer; transition:background 0.2s;">Send it</button>
+      </form>
+    </div>
+    <div id="fbSuccess" style="display:none; text-align:center; padding:24px 0;">
+      <div style="font-size:32px; margin-bottom:12px;">&#10003;</div>
+      <div style="font-family:var(--serif); font-size:18px; font-weight:600; margin-bottom:6px;" id="fbThanksTitle">Thanks. We read everything.</div>
+      <button onclick="document.getElementById('fbOverlay').style.display='none'; document.body.style.overflow=''; document.getElementById('fbFormContent').style.display=''; document.getElementById('fbSuccess').style.display='none'; document.getElementById('fbForm').reset();" style="margin-top:16px; padding:8px 24px; background:var(--ink); color:#fff; border:none; border-radius:8px; font-size:13px; font-weight:600; font-family:inherit; cursor:pointer;" id="fbCloseBtn">Close</button>
+    </div>
+  </div>
+</div>
+
 <script>
 // ============ TRANSLATIONS ============
 const I18N = {
@@ -1799,6 +1836,8 @@ function applyLang(lang) {
   renderCRows();
   // Recompute everything (formulas change in language)
   computeA(); computeB(); computeC();
+  // Update feedback button language
+  if (typeof updateFbLang === 'function') updateFbLang();
 }
 
 document.querySelectorAll('.lang-toggle button').forEach(btn => {
@@ -2157,8 +2196,61 @@ document.querySelectorAll('#caseA input').forEach(i => i.addEventListener('input
 document.querySelectorAll('#caseB input').forEach(i => i.addEventListener('input', computeB));
 document.querySelectorAll('#caseC input[id^="c_"]').forEach(i => i.addEventListener('input', computeC));
 
+// ============ GOOGLE SHEETS URL ============
+const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyRisAPkaJuK4o0z6TQyhTwNZnnvmsD7D71MhaaRxf-CU9k2saUgw0VQb54k2sSE9L2hA/exec';
+
+// ============ FEEDBACK FORM ============
+function updateFbLang() {
+  const isRu = currentLang === 'ru';
+  document.getElementById('fbBtnText').textContent = isRu ? '\u041e\u0442\u0437\u044b\u0432' : 'Feedback';
+  document.getElementById('fbTitle').textContent = isRu ? '\u0415\u0441\u0442\u044c \u043c\u044b\u0441\u043b\u0438?' : 'Got thoughts?';
+  document.getElementById('fbSubtitle').textContent = isRu ? '\u0420\u0430\u0441\u0441\u043a\u0430\u0436\u0438, \u0447\u0442\u043e \u043d\u0435 \u0445\u0432\u0430\u0442\u0430\u0435\u0442, \u0447\u0442\u043e \u0441\u043b\u043e\u043c\u0430\u043d\u043e \u0438\u043b\u0438 \u0447\u0442\u043e \u043a\u0440\u0443\u0442\u043e.' : "Tell us what's missing, broken, or brilliant.";
+  document.getElementById('fbLabelName').textContent = isRu ? '\u0418\u043c\u044f (\u043d\u0435\u043e\u0431\u044f\u0437\u0430\u0442\u0435\u043b\u044c\u043d\u043e)' : 'Your name (optional)';
+  document.getElementById('fbLabelType').textContent = isRu ? '\u041e \u0447\u0451\u043c \u0440\u0435\u0447\u044c?' : "What's this about?";
+  document.getElementById('fbOptBug').textContent = isRu ? '\u0411\u0430\u0433' : 'Bug';
+  document.getElementById('fbOptFeature').textContent = isRu ? '\u0425\u043e\u0447\u0443 \u0444\u0438\u0447\u0443' : 'Feature request';
+  document.getElementById('fbOptGeneral').textContent = isRu ? '\u041f\u0440\u043e\u0441\u0442\u043e \u043c\u044b\u0441\u043b\u044c' : 'General feedback';
+  document.getElementById('fbLabelMsg').textContent = isRu ? '\u0421\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u0435' : 'Your message';
+  document.getElementById('fbSubmitBtn').textContent = isRu ? '\u041e\u0442\u043f\u0440\u0430\u0432\u0438\u0442\u044c' : 'Send it';
+  document.getElementById('fbThanksTitle').textContent = isRu ? '\u0421\u043f\u0430\u0441\u0438\u0431\u043e. \u041c\u044b \u0432\u0441\u0451 \u0447\u0438\u0442\u0430\u0435\u043c.' : 'Thanks. We read everything.';
+  document.getElementById('fbCloseBtn').textContent = isRu ? '\u0417\u0430\u043a\u0440\u044b\u0442\u044c' : 'Close';
+}
+
+document.getElementById('fbForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('fbSubmitBtn');
+  btn.textContent = '...';
+  btn.disabled = true;
+
+  const data = {
+    sheet: 'Feedback',
+    name: document.getElementById('fbName').value.trim() || 'Anonymous',
+    type: document.getElementById('fbType').value,
+    message: document.getElementById('fbMsg').value.trim(),
+    timestamp: new Date().toISOString(),
+    language: currentLang
+  };
+
+  try {
+    await fetch(GOOGLE_SHEETS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+  } catch (err) {
+    console.warn('Feedback could not be sent:', err);
+  }
+
+  if (typeof gtag === 'function') gtag('event', 'submit_feedback', { feedback_type: data.type });
+
+  document.getElementById('fbFormContent').style.display = 'none';
+  document.getElementById('fbSuccess').style.display = '';
+  btn.disabled = false;
+  updateFbLang();
+});
+
 // ============ REGISTRATION GATE ============
-const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyRisAPkaJuK4o0z6TQyhTwNZnnvmsD7D71MhaaRxf-CU9k2saUgw0VQb54k2sSE9L2hA/exec'; // Replace with your Apps Script Web App URL
 
 function showRegModal() {
   const overlay = document.getElementById('regOverlay');
