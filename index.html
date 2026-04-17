@@ -908,6 +908,10 @@
     <span class="tab-num">REF</span>
     <span data-i18n="tab_m">Methodology</span>
   </button>
+  <button class="tab-btn" data-tab="feedback">
+    <span class="tab-num">&#9993;</span>
+    <span data-i18n="tab_fb">Feedback</span>
+  </button>
 </nav>
 
 <main>
@@ -1512,6 +1516,37 @@
   </div>
 </section>
 
+<!-- ============ FEEDBACK TAB PANEL ============ -->
+<section class="tab-panel" id="feedback" style="max-width:620px; margin:0 auto; padding:3rem 1.5rem;">
+  <div class="eyebrow" data-i18n="fb_eyebrow">We're listening</div>
+  <h2 class="section-title" style="font-family:var(--serif); font-size:1.6rem; font-weight:600; margin:0.8rem 0 0.4rem; font-variation-settings:'opsz' 40;" data-i18n="fb_title">Got thoughts?</h2>
+  <p style="color:var(--ink-muted); font-size:14px; margin-bottom:2rem; line-height:1.6;" data-i18n="fb_subtitle">Tell us what's missing, broken, or brilliant. Every message is read.</p>
+  <form id="fbForm">
+    <label style="display:block; margin-bottom:14px;">
+      <span style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); display:block; margin-bottom:5px;" data-i18n="fb_label_name">Your name (optional)</span>
+      <input id="fbName" type="text" style="width:100%; padding:10px 14px; border:1.5px solid var(--rule); border-radius:8px; font-size:15px; font-family:inherit; outline:none; transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rule)'">
+    </label>
+    <label style="display:block; margin-bottom:14px;">
+      <span style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); display:block; margin-bottom:5px;" data-i18n="fb_label_type">What's this about?</span>
+      <select id="fbType" style="width:100%; padding:10px 14px; border:1.5px solid var(--rule); border-radius:8px; font-size:15px; font-family:inherit; outline:none; background:#fff; cursor:pointer;">
+        <option value="bug" data-i18n="fb_opt_bug">Bug</option>
+        <option value="feature" data-i18n="fb_opt_feature">Feature request</option>
+        <option value="general" selected data-i18n="fb_opt_general">General feedback</option>
+      </select>
+    </label>
+    <label style="display:block; margin-bottom:20px;">
+      <span style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); display:block; margin-bottom:5px;" data-i18n="fb_label_msg">Your message</span>
+      <textarea id="fbMsg" required rows="5" style="width:100%; padding:10px 14px; border:1.5px solid var(--rule); border-radius:8px; font-size:15px; font-family:inherit; outline:none; resize:vertical; transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rule)'"></textarea>
+    </label>
+    <button id="fbSubmitBtn" type="submit" style="padding:12px 32px; background:var(--accent); color:#fff; border:none; border-radius:8px; font-size:15px; font-weight:600; font-family:inherit; cursor:pointer; transition:background 0.2s;" data-i18n="fb_send">Send it</button>
+  </form>
+  <div id="fbSuccess" style="display:none; text-align:center; padding:3rem 0;">
+    <div style="font-size:40px; margin-bottom:16px;">&#10003;</div>
+    <div style="font-family:var(--serif); font-size:1.3rem; font-weight:600;" data-i18n="fb_thanks">Thanks. We read everything.</div>
+    <button onclick="document.getElementById('fbSuccess').style.display='none'; document.getElementById('fbForm').style.display=''; document.getElementById('fbForm').reset();" style="margin-top:20px; padding:10px 28px; background:var(--ink); color:#fff; border:none; border-radius:8px; font-size:14px; font-weight:600; font-family:inherit; cursor:pointer;" data-i18n="fb_another">Send another</button>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-foot">
@@ -1523,42 +1558,7 @@
   </div>
 </footer>
 
-<!-- ============ FEEDBACK BUTTON + MODAL ============ -->
-<button id="fbBtn" onclick="document.getElementById('fbOverlay').style.display='flex'; document.body.style.overflow='hidden'; updateFbLang();" style="position:fixed; bottom:24px; right:24px; z-index:9000; background:var(--ink); color:#fff; border:none; border-radius:24px; padding:10px 20px; font-size:13px; font-weight:600; font-family:var(--sans); cursor:pointer; box-shadow:0 4px 16px rgba(0,0,0,0.18); transition:transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 6px 24px rgba(0,0,0,0.25)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 16px rgba(0,0,0,0.18)'"><span id="fbBtnText">Feedback</span></button>
 
-<div id="fbOverlay" style="display:none; position:fixed; inset:0; z-index:9998; background:rgba(26,24,20,0.45); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center;">
-  <div style="background:#fff; border-radius:16px; padding:36px 32px 28px; max-width:440px; width:90%; box-shadow:0 24px 80px rgba(0,0,0,0.18); font-family:var(--sans); position:relative;">
-    <button onclick="document.getElementById('fbOverlay').style.display='none'; document.body.style.overflow='';" style="position:absolute; top:14px; right:16px; background:none; border:none; font-size:20px; cursor:pointer; color:var(--ink-muted); line-height:1;">&times;</button>
-    <div id="fbFormContent">
-      <div style="font-family:var(--serif); font-size:20px; font-weight:600; margin-bottom:4px; font-variation-settings:'opsz' 40;" id="fbTitle">Got thoughts?</div>
-      <p id="fbSubtitle" style="color:var(--ink-muted); font-size:13px; margin-bottom:20px; line-height:1.5;">Tell us what's missing, broken, or brilliant.</p>
-      <form id="fbForm">
-        <label style="display:block; margin-bottom:12px;">
-          <span style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); display:block; margin-bottom:5px;" id="fbLabelName">Your name (optional)</span>
-          <input id="fbName" type="text" placeholder="" style="width:100%; padding:9px 12px; border:1.5px solid var(--rule); border-radius:8px; font-size:14px; font-family:inherit; outline:none; transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rule)'">
-        </label>
-        <label style="display:block; margin-bottom:12px;">
-          <span style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); display:block; margin-bottom:5px;" id="fbLabelType">What's this about?</span>
-          <select id="fbType" style="width:100%; padding:9px 12px; border:1.5px solid var(--rule); border-radius:8px; font-size:14px; font-family:inherit; outline:none; background:#fff; cursor:pointer;">
-            <option value="bug" id="fbOptBug">Bug</option>
-            <option value="feature" id="fbOptFeature">Feature request</option>
-            <option value="general" selected id="fbOptGeneral">General feedback</option>
-          </select>
-        </label>
-        <label style="display:block; margin-bottom:18px;">
-          <span style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); display:block; margin-bottom:5px;" id="fbLabelMsg">Your message</span>
-          <textarea id="fbMsg" required rows="4" style="width:100%; padding:9px 12px; border:1.5px solid var(--rule); border-radius:8px; font-size:14px; font-family:inherit; outline:none; resize:vertical; transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rule)'"></textarea>
-        </label>
-        <button id="fbSubmitBtn" type="submit" style="width:100%; padding:11px; background:var(--accent); color:#fff; border:none; border-radius:8px; font-size:14px; font-weight:600; font-family:inherit; cursor:pointer; transition:background 0.2s;">Send it</button>
-      </form>
-    </div>
-    <div id="fbSuccess" style="display:none; text-align:center; padding:24px 0;">
-      <div style="font-size:32px; margin-bottom:12px;">&#10003;</div>
-      <div style="font-family:var(--serif); font-size:18px; font-weight:600; margin-bottom:6px;" id="fbThanksTitle">Thanks. We read everything.</div>
-      <button onclick="document.getElementById('fbOverlay').style.display='none'; document.body.style.overflow=''; document.getElementById('fbFormContent').style.display=''; document.getElementById('fbSuccess').style.display='none'; document.getElementById('fbForm').reset();" style="margin-top:16px; padding:8px 24px; background:var(--ink); color:#fff; border:none; border-radius:8px; font-size:13px; font-weight:600; font-family:inherit; cursor:pointer;" id="fbCloseBtn">Close</button>
-    </div>
-  </div>
-</div>
 
 <script>
 // ============ TRANSLATIONS ============
@@ -1687,6 +1687,20 @@ const I18N = {
     m_r5_c: "Typical reporting context", m_r5_a: "GKZ, KZ-RK", m_r5_b: "Feasibility (monometallic)", m_r5_cc: "NI 43-101, JORC, SAMREC",
     m_r6_c: "Sensitivity to metal mix changes", m_r6_a: "Low (via equivalent factor)", m_r6_b: "None", m_r6_cc: "High (first-order)",
 
+    tab_fb: "Feedback",
+    fb_eyebrow: "We're listening",
+    fb_title: "Got thoughts?",
+    fb_subtitle: "Tell us what's missing, broken, or brilliant. Every message is read.",
+    fb_label_name: "Your name (optional)",
+    fb_label_type: "What's this about?",
+    fb_opt_bug: "Bug",
+    fb_opt_feature: "Feature request",
+    fb_opt_general: "General feedback",
+    fb_label_msg: "Your message",
+    fb_send: "Send it",
+    fb_thanks: "Thanks. We read everything.",
+    fb_another: "Send another",
+
     foot_b: "All figures are illustrative.",
     foot_body: "Project names, operators and deposit identifiers have been removed. Parameters are ordered to typical industry ranges but do not represent any specific asset, contract, or concentrate marketing agreement. Use for education and methodology discussion only — not for commercial decisions.",
     foot_meta: "WTF is my Cutoff? · v1.0 · Apr 2026"
@@ -1814,6 +1828,20 @@ const I18N = {
     m_r5_c: "Типовой контекст отчётности", m_r5_a: "ГКЗ, KZ-RK", m_r5_b: "ТЭО (монометалл)", m_r5_cc: "NI 43-101, JORC, SAMREC",
     m_r6_c: "Чувствит. к смене metal mix", m_r6_a: "Низкая (через коэф. экв.)", m_r6_b: "Отсутствует", m_r6_cc: "Высокая (первого порядка)",
 
+    tab_fb: "Отзыв",
+    fb_eyebrow: "Мы слушаем",
+    fb_title: "Есть мысли?",
+    fb_subtitle: "Расскажи, что не хватает, что сломано или что круто. Каждое сообщение читаем.",
+    fb_label_name: "Имя (необязательно)",
+    fb_label_type: "О чём речь?",
+    fb_opt_bug: "Баг",
+    fb_opt_feature: "Хочу фичу",
+    fb_opt_general: "Просто мысль",
+    fb_label_msg: "Сообщение",
+    fb_send: "Отправить",
+    fb_thanks: "Спасибо. Мы всё читаем.",
+    fb_another: "Отправить ещё",
+
     foot_b: "Все цифры иллюстративны.",
     foot_body: "Названия проектов, операторов и идентификаторы месторождений удалены. Параметры приведены к типовым отраслевым диапазонам и не представляют конкретный актив, контракт или соглашение о реализации концентрата. Использовать только для образования и обсуждения методологии — не для коммерческих решений.",
     foot_meta: "WTF is my Cutoff? · v1.0 · Apr 2026"
@@ -1836,8 +1864,7 @@ function applyLang(lang) {
   renderCRows();
   // Recompute everything (formulas change in language)
   computeA(); computeB(); computeC();
-  // Update feedback button language
-  if (typeof updateFbLang === 'function') updateFbLang();
+
 }
 
 document.querySelectorAll('.lang-toggle button').forEach(btn => {
@@ -2200,25 +2227,10 @@ document.querySelectorAll('#caseC input[id^="c_"]').forEach(i => i.addEventListe
 const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyRisAPkaJuK4o0z6TQyhTwNZnnvmsD7D71MhaaRxf-CU9k2saUgw0VQb54k2sSE9L2hA/exec';
 
 // ============ FEEDBACK FORM ============
-function updateFbLang() {
-  const isRu = currentLang === 'ru';
-  document.getElementById('fbBtnText').textContent = isRu ? '\u041e\u0442\u0437\u044b\u0432' : 'Feedback';
-  document.getElementById('fbTitle').textContent = isRu ? '\u0415\u0441\u0442\u044c \u043c\u044b\u0441\u043b\u0438?' : 'Got thoughts?';
-  document.getElementById('fbSubtitle').textContent = isRu ? '\u0420\u0430\u0441\u0441\u043a\u0430\u0436\u0438, \u0447\u0442\u043e \u043d\u0435 \u0445\u0432\u0430\u0442\u0430\u0435\u0442, \u0447\u0442\u043e \u0441\u043b\u043e\u043c\u0430\u043d\u043e \u0438\u043b\u0438 \u0447\u0442\u043e \u043a\u0440\u0443\u0442\u043e.' : "Tell us what's missing, broken, or brilliant.";
-  document.getElementById('fbLabelName').textContent = isRu ? '\u0418\u043c\u044f (\u043d\u0435\u043e\u0431\u044f\u0437\u0430\u0442\u0435\u043b\u044c\u043d\u043e)' : 'Your name (optional)';
-  document.getElementById('fbLabelType').textContent = isRu ? '\u041e \u0447\u0451\u043c \u0440\u0435\u0447\u044c?' : "What's this about?";
-  document.getElementById('fbOptBug').textContent = isRu ? '\u0411\u0430\u0433' : 'Bug';
-  document.getElementById('fbOptFeature').textContent = isRu ? '\u0425\u043e\u0447\u0443 \u0444\u0438\u0447\u0443' : 'Feature request';
-  document.getElementById('fbOptGeneral').textContent = isRu ? '\u041f\u0440\u043e\u0441\u0442\u043e \u043c\u044b\u0441\u043b\u044c' : 'General feedback';
-  document.getElementById('fbLabelMsg').textContent = isRu ? '\u0421\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u0435' : 'Your message';
-  document.getElementById('fbSubmitBtn').textContent = isRu ? '\u041e\u0442\u043f\u0440\u0430\u0432\u0438\u0442\u044c' : 'Send it';
-  document.getElementById('fbThanksTitle').textContent = isRu ? '\u0421\u043f\u0430\u0441\u0438\u0431\u043e. \u041c\u044b \u0432\u0441\u0451 \u0447\u0438\u0442\u0430\u0435\u043c.' : 'Thanks. We read everything.';
-  document.getElementById('fbCloseBtn').textContent = isRu ? '\u0417\u0430\u043a\u0440\u044b\u0442\u044c' : 'Close';
-}
-
 document.getElementById('fbForm').addEventListener('submit', async function(e) {
   e.preventDefault();
   const btn = document.getElementById('fbSubmitBtn');
+  const origText = btn.textContent;
   btn.textContent = '...';
   btn.disabled = true;
 
@@ -2244,10 +2256,10 @@ document.getElementById('fbForm').addEventListener('submit', async function(e) {
 
   if (typeof gtag === 'function') gtag('event', 'submit_feedback', { feedback_type: data.type });
 
-  document.getElementById('fbFormContent').style.display = 'none';
+  document.getElementById('fbForm').style.display = 'none';
   document.getElementById('fbSuccess').style.display = '';
   btn.disabled = false;
-  updateFbLang();
+  btn.textContent = origText;
 });
 
 // ============ REGISTRATION GATE ============
